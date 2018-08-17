@@ -5,7 +5,7 @@ module.exports.run = async (bot, message, args) => {
     const userurl = message.author.avatarURL;
     let botembed = new Discord.RichEmbed()
         .setColor("#000FF")
-        .setDescription(`<a:Dots:426956230582599690> Loading......`)
+        .setDescription(`Loading...`)
         .setTimestamp()
     message.channel.send(botembed).then(message =>{
         botembed.setColor("#000FF")
