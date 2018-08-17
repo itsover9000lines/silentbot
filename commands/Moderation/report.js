@@ -32,7 +32,6 @@ module.exports.run = async (bot, message, args) => {
 
 
     let reportschannel = message.guild.channels.find(`name`, "silent-log");
-    let reportschannel = message.guild.channels.find(`name`, "bot-spam");
     if (!reportschannel) return message.channel.send("Couldn't find silent-log.");
 
     message.delete().catch();
