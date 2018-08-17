@@ -41,7 +41,7 @@ bot.on("guildMemberAdd", async member => {
     await modlogs.send(botembed);
 });
 bot.on("guildMemberRemove", async member => {
-    member.send(`Awww, bye ${member}, we will miss you, if you ever wanna come back, here is the invite: discord.gg/krXDXEM`)
+    member.send(`Hope you enjoyed your time here in ${member.guild.name} ${member}`)
     let guild = member.guild;
     let modlogs = member.guild.channels.find('name', "silent-log, bot-spam");
     if (!modlogs) return;
