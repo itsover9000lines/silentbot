@@ -9,7 +9,7 @@ module.exports.run = async (bot, message, args) => {
     let uptime = (`${hours} Hours\n${minutes} Minutes\n${seconds} Seconds`);
         const embed = new Discord.RichEmbed()
         .setColor(`#FF000`)
-        .addField(`Uptime`, ${duration}, true)
+        .addField(`Uptime`, uptime, true, Math.round(number))
         .setFooter(`Command Ran By: ${message.author.username}`, message.author.avatarURL)
     message.channel.send(embed);
 }
