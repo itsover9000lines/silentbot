@@ -18,7 +18,18 @@ bot.on("ready", async () => {
 
     console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
 
-    bot.user.setActivity(`${bot.guilds.size} Servers and ${bot.users.size} Users`, { type: "WATCHING"});
+    //bot.user.setActivity(`${bot.guilds.size} Servers and ${bot.users.size} Users`, { type: "WATCHING"});
+  
+    function changing_status() {
+    let status = ['${bot.guilds.size} Servers', '${bot.users.size} Users', ':p']
+    let random = status[Math.floor(Math.random() * status.length)]
+    bot.user.setActivity(random)
+}
+
+bot.on("ready", () => {
+    console.log( /*Whatever you want to say*/ );
+    setInterval(changing_status, 10000);
+})
 
 });
 
