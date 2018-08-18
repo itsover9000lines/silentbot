@@ -39,9 +39,8 @@ bot.on("guildMemberAdd", async member => {
         .setThumbnail(member.user.avatarURL)
     await modlogs.send(botembed);
 });
-
-bot.on('messageDelete', async (message) => {
-    let logs = message.guild.channels.find('name', 'silent-log');
+client.on('messageDelete', async (message) => {
+    const logs = message.guild.channels.find('name', 'logs');
     if (message.guild.me.hasPermission('MANAGE_CHANNELS') && !logs) {
         await message.guild.createChannel('logs', 'text');
     }
@@ -57,10 +56,11 @@ bot.on('messageDelete', async (message) => {
     } else {
         user = message.author
     }
-    let logembed = new Discord.RichEmbed()
-        .setColor("#FF0000")
-        .setAuthor('Message Deleted', message.author.displayAvatarURL)
-        .addField(`**Message sent by ${member} deleted in <#${channel.id}>**\n\n`, message.content)
+    const logembed = new Discord.RichEmbed()
+        //.setTitle('Message Deleted')
+        .setAuthor(user.tag, message.author.displayAvatarURL)
+        .addField(`**Message sent by ${message.author.username}> deleted in <#${message.channel.id}>**\n\n`, message.content)
+        .setColor(message.guild.member(client.user).displayHexColor)
         .setFooter(`<#${message.channel.id}>`)
         .setTimestamp()
     //console.log(entry)
