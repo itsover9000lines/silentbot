@@ -8,6 +8,10 @@ const bot = new Discord.Client({disableEveryone: true});
 bot.commands = new Discord.Collection();
 let cooldown = new Set();
 let cdseconds = 2;
+var prefix = 's!';
+let fetched = await db.fetch(`prefix_${message.guild.id}`);
+if (fetched === null) prefix = 's!';
+else prefix = fetched;
 bot.login(process.env.BOT_TOKEN)
 
 // End of the Bot Requirements etc.
