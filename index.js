@@ -8,6 +8,17 @@ const bot = new Discord.Client({disableEveryone: true});
 bot.commands = new Discord.Collection();
 let cooldown = new Set();
 let cdseconds = 2;
+
+{ Client }.on("message", async message => {
+  let prefixes = JSON.parse(fs.readFileSync("./prefixes.json", "utf8"));
+  if(!prefixes[message.guild.id]){
+    prefixes[message.guild.id] = {
+      prefixes: auth.prefix
+    };
+  }
+  let prefix = prefixes[message.guild.id].prefixes;
+}
+
 bot.login(process.env.BOT_TOKEN)
 
 // End of the Bot Requirements etc.
