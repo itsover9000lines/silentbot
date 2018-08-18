@@ -28,7 +28,7 @@ bot.on("guildMemberAdd", async member => {
     .setColor("#20C3FF")
     .setDescription(`Welcome to **${member.guild.name}** ${member}!`)
     welcome.send(welcomeembed);
-    let modlogs = member.guild.channels.find('name', "silent-log, bot-spam");
+    let modlogs = member.guild.channels.find('name', "silent-log");
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#00ff51")
@@ -41,7 +41,7 @@ bot.on("guildMemberAdd", async member => {
 });
 
 bot.on('messageDelete', async (message) => {
-    const logs = message.guild.channels.find('name', 'logs');
+    const logs = message.guild.channels.find('name', 'silent-log');
     if (message.guild.me.hasPermission('MANAGE_CHANNELS') && !logs) {
         await message.guild.createChannel('logs', 'text');
     }
