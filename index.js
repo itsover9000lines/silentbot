@@ -59,7 +59,7 @@ bot.on('messageDelete', async (message) => {
     let logembed = new Discord.RichEmbed()
         //.setTitle('Message Deleted')
         .setAuthor(user.tag, message.author.displayAvatarURL)
-        .addField(`Message sent by <@${message.author.id}> deleted in <#${message.channel.id}>\n\n`, message.content)
+        .setDescription(`Message sent by <@${message.author.tag}> deleted in <#${message.channel.name}>\n\n`, message.content)
         .setColor("#FF0000")
         .setFooter(`<#${message.channel.id}>`)
         .setTimestamp()
