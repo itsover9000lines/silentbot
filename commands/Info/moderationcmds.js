@@ -5,8 +5,7 @@ module.exports.run = async (bot, message, args) => {
         .setColor("#7EC0EE")
         .setDescription("This is the Help Information")
         .setTitle(`Moderation Commands`)
-        .setDescription(`
-        s!addrole: Add a role with this command
+        .setDescription(`s!addrole: Add a role with this command
         s!ban: Ban a member with this command
         s!dm: Dm a member with this command
         s!kick: Kick with this command
