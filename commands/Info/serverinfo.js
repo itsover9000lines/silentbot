@@ -34,6 +34,7 @@ module.exports.run = async (bot, message, args) => {
         .addField("Created", `${message.guild.createdAt.toString().substr(0, 15)},\n${checkDays(message.guild.createdAt)}`, true)
         .setThumbnail(sIcon)
         .addField("Region", region[message.guild.region], true)
+        .addField(`Partnered`, `${message.guild.features.length === 0 ? 'No' : `Yes, features: ${message.guild.features.map(feature => `\`${feature}\``).join(', ')}`}`, true)
         .addField("Verification Level", verifLevels[message.guild.verificationLevel], true)
         .setTimestamp()
         .addField("Total Members", message.guild.memberCount, true)
