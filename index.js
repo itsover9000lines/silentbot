@@ -18,16 +18,8 @@ bot.on("ready", async () => {
 
     console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
 
-  //  bot.user.setActivity(`${bot.guilds.size} Servers and ${bot.users.size} Users`, { type: "WATCHING"});
-    function changing_status() {
-    let status = ['status 1', 'status 2', 'status']
-    let random = status[Math.floor(Math.random() * status.length)]
-    bot.user.setActivity(random)
-}
-
-bot.on("ready", () => {
-    setInterval(changing_status, 10000);
-})
+    bot.user.setActivity(`${bot.guilds.size} Servers and ${bot.users.size} Users`, { type: "WATCHING"});
+    
 });
 
 bot.on("guildMemberAdd", async member => {
