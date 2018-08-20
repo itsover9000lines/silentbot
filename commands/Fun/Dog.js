@@ -12,7 +12,7 @@ module.exports.run = async (bot,message,args) => {
 
         message.channel.send(embed).then(message => {
             embed.setColor("#7EC0EE")
-            embed.setDescription("Here's a Photo of a Dog 😊")
+            embed.setDescription("Here's a photo of a floofer 😊")
             embed.setImage(body.url)
             embed.setFooter("Command Ran By: " + usernameid, userURL)
             message.edit(embed)
