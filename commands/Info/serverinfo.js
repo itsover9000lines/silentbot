@@ -38,6 +38,7 @@ module.exports.run = async (bot, message, args) => {
         .addField("Verification Level", verifLevels[message.guild.verificationLevel], true)
         .setTimestamp()
         .addField("Total Members", message.guild.memberCount, true)
+        .addField('Member Status', `**${message.guild.members.filter(o => o.presence.status === 'online').size}** Online\n**${message.guild.members.filter(i => i.presence.status === 'idle').size}** Idle/Away\n**${message.guild.members.filter(dnd => dnd.presence.status === 'dnd').size}** Do Not Disturb\n**${message.guild.members.filter(off => off.presence.status === 'offline').size}** Offline/Invisible\n**${message.guild.members.filter(s => s.presence.status === 'streaming').size}** Streaming`)
         .addField("Total Channels", message.guild.channels.size, true)
         .addField("Total Roles", message.guild.roles.size, true)
         .addField("Total Bots", botCount, true)
