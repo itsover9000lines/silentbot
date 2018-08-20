@@ -5,7 +5,7 @@ if (message.content.startsWith(prefix + "global")) {
     let xo03 = xoargs.join(" ")
     var xo02 = message.guild.channels.find('name', 'general');
     if (!xo02) return message.reply(`General chat was not found.`)
-    if (message.channel.id !== '481244469962735618') return message.reply('You can not run this here!')
+    if (message.channel.name !== 'global-chat') return message.reply('You can not run this here!')
                 if (!xo03) return message.reply('You must write a message")
                     message.delete();
                     var tchat_embed = new Discord.RichEmbed()
