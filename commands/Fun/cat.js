@@ -20,11 +20,11 @@ module.exports.run = async (bot, message, args) => {
     let result = Math.floor((Math.random() * replies.length));
     let embed = new Discord.RichEmbed()
         .setColor("#FF000")
-        .setDescription("<a:Dots:426956230582599690> Loading a Cat Photo, Please Wait.,,,,")
+        .setDescription("Loading a meow, Please Wait.,,,,")
 
     message.channel.send(embed).then(message => {
         embed.setColor("#7EC0EE")
-        embed.setDescription("Here's a Photo of a Cat 😊")
+        embed.setDescription("Here's a Photo of a meow 😊")
         embed.setImage(replies[result])
         embed.setFooter("Command Ran By: " + usernameid, userURL)
         message.edit(embed)
