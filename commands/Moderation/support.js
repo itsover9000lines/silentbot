@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 module.exports.run = async (bot, message, args) => {
-let logchannel = bot.channels.get('Replace this will the channel you want the bot to use when someone requests a support thing')
+let logchannel = bot.channels.get('480905979341307904')
     var options = {
         maxAge: 0
     };
