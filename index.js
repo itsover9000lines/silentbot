@@ -18,7 +18,7 @@ bot.on("ready", async () => {
 
     console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
 
-    bot.user.setActivity(`${bot.users.size.toLocaleString()} Users`, { type: "WATCHING"});
+    bot.user.setActivity(`${bot.guilds.size} Servers, ${bot.users.size} Users`, { type: "WATCHING"});
 
 });
 
