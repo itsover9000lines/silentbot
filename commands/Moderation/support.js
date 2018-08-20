@@ -32,7 +32,7 @@ let reason = args.join(' ');
 
         })
     }).then(message => {
-        Schannel.send(`${Susername} You Message has been given to the bot support team! they will get back to you as soon as possible!`)
+        Schannel.send(`${Susername} You Message has been given to the bot support team! they will get back to you as soon as possible!`).then(msg => msg.delete(5000));
     })
 }
 module.exports.help = {
