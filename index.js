@@ -18,8 +18,8 @@ bot.on("ready", async () => {
 
     console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
 
-    bot.user.setActivity(`${bot.guilds.size} Servers and ${bot.users.size} Users`, { type: "WATCHING"});
-    
+    bot.user.setActivity(`${bot.users.size.toLocaleString()} Users`, { type: "WATCHING"});
+
 });
 
 bot.on("guildMemberAdd", async member => {
@@ -40,58 +40,8 @@ bot.on("guildMemberAdd", async member => {
         .setThumbnail(member.user.avatarURL)
     await modlogs.send(botembed);
 });
-bot.on("guildMemberAdd", async member => {
-    member.send(`Welcome to **${member.guild.name}** ${member}! My name is SilentBot, I watch over the server and ${bot.guilds.size} other servers! I help make sure that everyone is safe and happy 🤗. If you would like to invite me to your server, use this link! http://bit.ly/SilentBotInvite`)
-    let serverSize = member.guild.memberCount;
-    let botCount = member.guild.members.filter(m => m.user.bot).size;
-    let humanCount = serverSize - botCount;
-    let welcome = member.guild.channels.find('name', 'welcome')
-    let welcomeembed = new Discord.RichEmbed()
-    .setColor(`#20C3FF`)
-    .setDescription(`Welcome to **${member.guild.name}** ${member}!!! So glad that you are here! :smile:<:Hype:446237019283259422>:wave:<a:Cheer:446237254499958795>`)
-    .addField(`Total Users`, `${humanCount}`, true)
-    .setAuthor(member, member.user.avatarURL)
-    .setAuthor(member.user.username, member.user.avatarURL)
-    welcome.send(welcomeembed);
-    let modlogs = member.guild.channels.find('name', "silent-log");
-    if (!modlogs) return;
-    let botembed = new Discord.RichEmbed()
-        .setColor("#1CFF00")
-        .setAuthor('Member Joined', member.user.avatarURL)
-        .setFooter(`ID: ${member.id}`)
-        .setTimestamp()
-        .setDescription(`${member} ${member.user.tag}`)
-        .setThumbnail(member.user.avatarURL)
-    await modlogs.send(botembed);
-bot.on('messageDelete', async (message) => {
-    let logs = message.guild.channels.find('name', 'silent-log');
-    if (message.guild.me.hasPermission('MANAGE_CHANNELS') && !logs) {
-        await message.guild.createChannel('logs', 'text');
-    }
-    if (!logs) {
-        return console.log('The logs channel does not exist and cannot be created')
-    }
-    const entry = await message.guild.fetchAuditLogs({
-        type: 'MESSAGE_DELETE'
-    }).then(audit => audit.entries.first())
-    let user;
-    if (entry.extra.channel.id === message.channel.id && (entry.target.id === message.author.id) && (entry.createdTimestamp > (Date.now() - 5000)) && (entry.extra.count >= 1)) {
-        user = entry.executor.username
-    } else {
-        user = message.author
-    }
-    let logembed = new Discord.RichEmbed()
-        //.setTitle('Message Deleted')
-        .setAuthor(user.tag, message.author.displayAvatarURL)
-        .addField(`Message sent by @${message.author.tag} deleted in #${message.channel.name}\n\n`, message.content)
-        .setColor("#FF0000")
-        .setFooter(`<#${message.channel.id}>`)
-        .setTimestamp()
-    //console.log(entry)
-    logs.send(logembed);
-})
 bot.on("guildMemberRemove", async member => {
-    member.send(`Hope you enjoyed your time here in ${member.guild.name} ${member}`)
+    member.send(`Awww, bye ${member}, we will miss you, if you ever wanna come back, here is the invite: discord.gg/krXDXEM`)
     let guild = member.guild;
     let modlogs = member.guild.channels.find('name', "silent-log");
     if (!modlogs) return;
