@@ -6,7 +6,7 @@ module.exports.run = async (bot, message, args) => {
     `Black Hole`, `Scams` , `Love`, `Hate`, `iPhone`, `Brick`, `Bad Bots`, `Chair`, 
     `Lemons`, `Cake`, `Pringles`, `Gummy Bears`, `Bus`, `Train`, `Yourself`, `Knife`, `UR MOM`,
     `Self Bots`, `A big hug`, `A teddy bear`, `Work`, `My love and effection`, `Memes`, `Happiness`,
-    `Money`, `Poverty`, `A fan`,
+    `Money`, `Poverty`, `A fan`, `${message.author.tag}`,
 ]
     let result = Math.floor((Math.random() * replies.length));
     let embed = new Discord.RichEmbed()
