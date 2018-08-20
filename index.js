@@ -40,6 +40,29 @@ bot.on("guildMemberAdd", async member => {
         .setThumbnail(member.user.avatarURL)
     await modlogs.send(botembed);
 });
+bot.on("guildMemberAdd", async member => {
+    member.send(`Welcome to **${member.guild.name}** ${member}! My name is SilentBot, I watch over the server and ${bot.guilds.size} other servers! I help make sure that everyone is safe and happy 🤗. If you would like to invite me to your server, use this link! http://bit.ly/SilentBotInvite`)
+    let serverSize = member.guild.memberCount;
+    let botCount = member.guild.members.filter(m => m.user.bot).size;
+    let humanCount = serverSize - botCount;
+    let welcome = member.guild.channels.find('name', 'welcome')
+    let welcomeembed = new Discord.RichEmbed()
+    .setColor(`#20C3FF`)
+    .setDescription(`Welcome to **${member.guild.name}** ${member}!!! So glad that you are here! :smile:<:Hype:446237019283259422>:wave:<a:Cheer:446237254499958795>`)
+    .addField(`Total Users`, `${humanCount}`, true)
+    .setAuthor(member, member.user.avatarURL)
+    .setAuthor(member.user.username, member.user.avatarURL)
+    welcome.send(welcomeembed);
+    let modlogs = member.guild.channels.find('name', "silent-log");
+    if (!modlogs) return;
+    let botembed = new Discord.RichEmbed()
+        .setColor("#1CFF00")
+        .setAuthor('Member Joined', member.user.avatarURL)
+        .setFooter(`ID: ${member.id}`)
+        .setTimestamp()
+        .setDescription(`${member} ${member.user.tag}`)
+        .setThumbnail(member.user.avatarURL)
+    await modlogs.send(botembed);
 bot.on('messageDelete', async (message) => {
     let logs = message.guild.channels.find('name', 'silent-log');
     if (message.guild.me.hasPermission('MANAGE_CHANNELS') && !logs) {
