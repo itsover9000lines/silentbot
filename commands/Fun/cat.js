@@ -23,7 +23,7 @@ module.exports.run = async (bot, message, args) => {
         .setDescription("<a:Dots:426956230582599690> Loading a Cat Photo, Please Wait.,,,,")
 
     message.channel.send(embed).then(message => {
-        embed.setColor("#000FF")
+        embed.setColor("#7EC0EE")
         embed.setDescription("Here's a Photo of a Cat 😊")
         embed.setImage(replies[result])
         embed.setFooter("Command Ran By: " + usernameid, userURL)
