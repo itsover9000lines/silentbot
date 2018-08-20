@@ -1,6 +1,6 @@
 exports.run = (client, message, args) => {
 
-    if (message.author.id !== "YOUR_USER_ID") return message.channel.send("⛔ **ACCESS DENIED**");
+    if (message.author.id !== "203259894743302145") return message.channel.send("⛔ **Owner Only Command**");
 
     try {
         delete require.cache[require.resolve(`./${args[0]}.js`)];
