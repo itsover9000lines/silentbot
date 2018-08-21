@@ -17,5 +17,7 @@
         "moment-duration-format": "^2.2.2",
         "moment": "^2.22.2",
         "morse-node": "^0.1.1"
+        "ascii-art": "^1.4.3",
+        "quick.db": "^6.3.2"
     }
 }
