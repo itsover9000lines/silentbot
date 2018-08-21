@@ -61,7 +61,7 @@ bot.on('messageDelete', async (message) => {
         //.setTitle('Message Deleted')
         .setAuthor(user.tag, message.author.displayAvatarURL)
         .addField(`Message sent by ${message.author.tag} deleted in #${message.channel.name}\n\n`, message.content)
-        .setColor(message.guild.member(client.user).displayHexColor)
+        .setColor(message.guild.member(bot.user).displayHexColor)
         .setFooter(`<#${message.channel.id}>`)
         .setTimestamp()
     //console.log(entry)
