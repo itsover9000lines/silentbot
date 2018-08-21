@@ -18,7 +18,13 @@ bot.on("ready", async () => {
 
     console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
 
-    bot.user.setActivity(`${bot.guilds.size} Servers, ${bot.users.size} Users`, { type: "WATCHING"});
+    bot.user.setPresence({
+        game: {
+            name: `s!help I watch over${bot.guilds.size} Servers, and ${bot.users.size} Users`,
+            type: "STREAMING",
+            url: "https://www.twitch.tv/silentgamerplayz"
+        }
+    })
 
 });
 
