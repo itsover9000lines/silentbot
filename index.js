@@ -20,7 +20,7 @@ bot.on("ready", async () => {
 
     bot.user.setPresence({
         game: {
-            name: `s!help I watch over${bot.guilds.size} Servers, and ${bot.users.size} Users`,
+            name: `s!help I watch over ${bot.guilds.size} Servers, and ${bot.users.size} Users!`,
             type: "STREAMING",
             url: "https://www.twitch.tv/silentgamerplayz"
         }
