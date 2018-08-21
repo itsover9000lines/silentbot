@@ -31,7 +31,6 @@ bot.on("ready", async () => {
 bot.on("guildMemberAdd", async member => {
     //member.send(`Welcome to **${member.guild.name}** ${member}! My name is SilentBot, I watch over the server and ${bot.guilds.size} other servers! I help make sure that everyone is safe and happy 🤗. If you would like to invite me to your server, use this link! http://bit.ly/SilentBotInvite`)
     let welcome = member.guild.channels.find('name', 'welcome')
-    let welcome = member.guild.channels.find('name', '👋welcome👋')
     let welcomeembed = new Discord.RichEmbed()
     .setColor("#20C3FF")
     .setDescription(`Welcome to **${member.guild.name}** ${member}!`)
