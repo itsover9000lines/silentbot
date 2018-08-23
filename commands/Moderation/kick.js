@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
     .addField(`Moderator`, `<@${message.author.id}>`, true)
     .addField(`Channel`, message.channel, true)
     .setTimestamp()
-    let kickChannel = message.guild.channels.find(`name`, "modlogs");
+    let kickChannel = message.guild.channels.find(`name`, "silent-log");
     if (!kickChannel) return message.channel.send("Can't find **silent-log** channel to log in.");
 
     message.guild.member(kUser).kick(kReason);
