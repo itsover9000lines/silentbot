@@ -1,38 +1,49 @@
-const Fortnite = require('fortnite');
-const stats = new Fortnite("0f6be1e2-d4bc-4e77-9c6b-6162febce311");
 const Discord = require('discord.js');
+const keys = require('../../../config.js');
+const Client = require('fortnite');
+const fortnite = new Client(keys.fortnite)
+module.exports.run = async(bot, message, args) => {
+let username = args[0];
+let platform = args[1] || 'pc';
+if(!platform) return message.channel.send(`Please Provide a Platform!`)
+if(!username) return message.channel.send(`Please provide a username!`);
+let data = fortnite.user(username, platform).then(data => {
+    let stats = data.stats;
+    let lifetime = stats.lifetime;
+    let score = lifetime[6] ['Score'];
+    let mplayed = lifetime[7] ['Matches Played'];
+    let wins = lifetime[8] ['Wins'];
+    let winper = lifetime[9] ['Win%'];
+    let kills = lifetime[10] ['Kills'];
+    let kd = lifetime[11] ['K/d'];
+    let top3 = lifetime[1] [`Top 3s`];
+    let top6 = lifetime[2] [`Top 6s`];
+    let top10 = lifetime[3] [`Top 10`];
+    let top12 = lifetime[4] [`Top 12s`]
+    let top25 = lifetime[5] [`Top 25s`];
+    let embed = new Discord.RichEmbed()
+    .setColor('RANDOM')
+    .setAuthor(data.username)
+    .setDescription(`**LifeTime Stats** For [${data.username}](${data.URL})`)
+    .addField(`Wins`, wins, true)
+    .addField(`Kills`, kills, true)
+    .addField(`Score`, score, true)
+    .addField(`Matches Played`, mplayed, true)
+    .addField(`Win Percentage`, winper, true)
+    .addField(`Kill/Death Ratio`, kd, true)
+    .addField(`Top 3`, top3, true)
+    .addField(`Top 6`, top6, true)
+    .addField(`Top 10`, top10, true)
+    .addField(`Top 12`, top12, true)
+    .addField(`Top 25`, top25, false)
+    .setThumbnail(`https://pbs.twimg.com/profile_images/1017458813199372289/QtGv1tyn_400x400.jpg`)
+    message.channel.send(embed)
 
-exports.run = (client, message, args, tools) => {
+}).catch(error => {
+message.channel.send(`Nothing for that person.\nPlease make sure you are searching the right Platform/User\ned!fortnite **UsernameHere** Platformhere`);
 
-        let platform;
-        let username;
-
-        if (!['pc', 'xbl', 'psn'].includes(args[0])) return message.channel.send('**Please Include the platform: `!fortnite [ pc | xbl | psn ] <username>`**');
-        if (!args[1]) return message.channel.send('**Please Include the username: `!fortnite [ pc | xbl | psn ] <username>`**');
-
-        platform = args.shift();
-        username = args.join(' ');
-
-        fortnite.user(username, platform).then(data => {
-                    const embed = new Discord.MessageEmbed()
-                        .setColor(0xffffff)
-                        .setTitle(`Stats for ${data.username}`)
-                        .setDescription(`**Top Placement**\n\n**Top 3s:** *${data.lifetimeStats[0].value}*\n**Top 5s:** *${data.lifetimeStats[1].value}*\n**Top 6s:** *${data.lifetimeStats[3].value}*\n**Top 12s:** *${data.lifetimeStats[4].value}*\n**Top 25s:** *${data.lifetimeStats[5].value}*`, true)
-                        .addField('Total Score', data.lifetimeStats[6].value, true)
-                        .addField('Matches Played', data.lifetimeStats[7].value, true)
-                        .addField('Wins', data.lifetimeStats[8].value, true)
-                        .addField('Win Percentage', data.lifetimeStats[9].value, true)
-                        .addField('Kills', data.lifetimeStats[10].value, true)
-                        .addField('K/D Ratio', data.lifetimeStats[11].value, true)
-                        .addField('Kills Per Minute', data.lifetimeStats[12].value, true)
-                        .addField('Time Played', data.lifetimeStats[13].value, true)
-                        .addField('Average Survival Time', data.lifetimeStats[14].value, true)
-
-                    message.channel.send(embed)
-                        .catch(error => {
-
-                            message.channel.send('Username not found!');
-
-                        })
-
-                }
+})
+}
+module.exports.help = { 
+    name: "fortnite"
+}
