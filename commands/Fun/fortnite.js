@@ -13,7 +13,7 @@ exports.run = (client, message, args, tools) => {
         platform = args.shift();
         username = args.join(' ');
 
-        stats.checkPlayer(username, platform).then(data => {
+        fortnite.user(username, platform).then(data => {
                     const embed = new Discord.MessageEmbed()
                         .setColor(0xffffff)
                         .setTitle(`Stats for ${data.username}`)
