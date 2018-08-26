@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const keys = require('process.env.FORTNITEAPI');
+const keys = require(process.env.FORTNITEAPI);
 const Client = require('fortnite');
 const fortnite = new Client(keys.fortnite)
 module.exports.run = async(bot, message, args) => {
