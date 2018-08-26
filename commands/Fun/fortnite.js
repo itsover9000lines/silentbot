@@ -22,7 +22,7 @@ let data = fortnite.user(username, platform).then(data => {
     let top12 = lifetime[4] [`Top 12s`]
     let top25 = lifetime[5] [`Top 25s`];
     let embed = new Discord.RichEmbed()
-    .setColor('RANDOM')
+    .setColor(0xffffff)
     .setAuthor(data.username)
     .setDescription(`**LifeTime Stats** For [${data.username}](${data.URL})`)
     .addField(`Wins`, wins, true)
