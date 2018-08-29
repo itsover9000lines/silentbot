@@ -29,16 +29,22 @@ bot.on("ready", async () => {
 });
 
 bot.on("guildMemberAdd", async member => {
-    //member.send(`Welcome to **${member.guild.name}** ${member}! My name is SilentBot, I watch over the server and ${bot.guilds.size} other servers! I help make sure that everyone is safe and happy 🤗. If you would like to invite me to your server, use this link! http://bit.ly/SilentBotInvite`)
+    member.send(`Welcome to **${member.guild.name}** ${member}`)
+    let serverSize = member.guild.memberCount;
+    let botCount = member.guild.members.filter(m => m.user.bot).size;
+    let humanCount = serverSize - botCount;
     let welcome = member.guild.channels.find('name', 'welcome')
     let welcomeembed = new Discord.RichEmbed()
-    .setColor("#20C3FF")
+    .setColor(`RANDOM`)
     .setDescription(`Welcome to **${member.guild.name}** ${member}!`)
+    .addField(`Total Users`, `${humanCount}`, true)
+    .setAuthor(member, member.user.avatarURL)
+    .setAuthor(member.user.username, member.user.avatarURL)
     welcome.send(welcomeembed);
     let modlogs = member.guild.channels.find('name', "silent-log");
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
-        .setColor("#00ff51")
+        .setColor("#1CFF00")
         .setAuthor('Member Joined', member.user.avatarURL)
         .setFooter(`ID: ${member.id}`)
         .setTimestamp()
@@ -48,12 +54,6 @@ bot.on("guildMemberAdd", async member => {
 });
 bot.on('messageDelete', async (message) => {
     const logs = message.guild.channels.find('name', 'silent-log');
-    if (message.guild.me.hasPermission('MANAGE_CHANNELS') && !logs) {
-        await message.guild.createChannel('silent-log', 'text');
-    }
-    if (!logs) {
-        return console.log('The logs channel does not exist and cannot be created')
-    }
     const entry = await message.guild.fetchAuditLogs({
         type: 'MESSAGE_DELETE'
     }).then(audit => audit.entries.first())
