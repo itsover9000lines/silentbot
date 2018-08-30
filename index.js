@@ -29,7 +29,7 @@ bot.on("ready", async () => {
 });
 
 bot.on("guildMemberAdd", async member => {
-    member.send(`Welcome to **${member.guild.name}** ${member}`)
+    //member.send(`Welcome to **${member.guild.name}** ${member}`)
     let serverSize = member.guild.memberCount;
     let botCount = member.guild.members.filter(m => m.user.bot).size;
     let humanCount = serverSize - botCount;
