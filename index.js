@@ -88,7 +88,7 @@ bot.on('guildCreate', async guild => {
       // await modlogs.send(botembed);
 });
 bot.on("guildMemberRemove", async member => {
-    member.send(`Rest in peace ${member}`)
+    //member.send(`Rest in peace ${member}`)
     let guild = member.guild;
     let modlogs = member.guild.channels.find('name', "silent-log");
     if (!modlogs) return;
