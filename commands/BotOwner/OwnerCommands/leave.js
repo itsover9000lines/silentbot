@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 module.exports.run = async (bot, message, args) => {
-    if (message.author.id !== "288450828837322764") return bot.users.get("288450828837322764").send(`${message.author.username} Has Tried to use the Leave Server Command.`).catch(() => console.error('I couldnt send the PM to the user.'));
+    if (message.author.id !== "478653381922127895") return bot.users.get("478653381922127895").send(`${message.author.username} Has Tried to use the Leave Server Command.`).catch(() => console.error('I couldnt send the PM to the user.'));
     bot.guilds.find('id', `${args[0]}`).owner.send(`This bot has been removed from your server. To know full details of this, please contact the bot owner SilentMemer#7124 or join the support server. https://discord.gg/4m7fmYA`)
     await bot.guilds.find('id', `${args[0]}`).leave()
 }
