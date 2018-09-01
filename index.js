@@ -35,9 +35,9 @@ bot.on("guildMemberAdd", async member => {
     let humanCount = serverSize - botCount;
     let welcome = member.guild.channels.find('name', 'welcome')
     let welcomeembed = new Discord.RichEmbed()
-    .setColor(`RANDOM`)
+    .setColor(`#20C3FF`)
     .setDescription(`Welcome to **${member.guild.name}** ${member}!`)
-    .addField(`Total Users`, `${humanCount}`, true)
+    .addField(`You are the`, `${humanCount} member!`, true)
     .setAuthor(member, member.user.avatarURL)
     .setAuthor(member.user.username, member.user.avatarURL)
     welcome.send(welcomeembed);
