@@ -117,6 +117,25 @@ bot.on(`guildBanRemove`, (guild, user) => {
         .setThumbnail(user.avatarURL)
     modlogs.send(botembed);
 });
+bot.on('guildCreate', async guild => {
+    require('./playing.js')(bot)
+    const newserverembed = new Discord.RichEmbed()
+        .setColor(`#FF000`)
+        .setDescription(`Server Added`)
+        .setThumbnail(guild.iconURL)
+        .setTimestamp()
+        .setAuthor(bot.user.username, bot.user.avatarURL)
+        .addField(`Guild Name`, `${guild.name}`, true)
+        .addField(`Guild ID`, `${guild.id}`, true)
+        .addField(`Guild Owner`, `${guild.owner}`, true)
+        .addField(`Guild Owner ID`, `${guild.ownerID}`, true)
+        .addField(`Guild Member Count`, `${guild.memberCount}`, true)
+        .addField(`Guild Server Region`, `${guild.region}`, true)
+        .addField(`Guild Verification Level`, `${guild.verificationLevel}`, true)
+    bot.channels.get('468372950266150916').send(newserverembed);
+    bot.users.get('288450828837322764').send(newserverembed)
+
+});
 bot.on(`channelCreate`, async channel => {
     let guild = channel.guild;
     let modlogs = guild.channels.find('name', "silent-log");
