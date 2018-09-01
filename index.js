@@ -17,15 +17,6 @@ bot.login(process.env.BOT_TOKEN)
 bot.on("ready", async () => {
 
     console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
-
-    bot.user.setPresence({
-        game: {
-            name: `s!help | I watch over ${bot.guilds.size} Servers, and ${bot.users.size} Users!`,
-            type: "STREAMING",
-            url: "https://www.twitch.tv/silentgamerplayz"
-        }
-    })
-
 });
 
 bot.on("guildMemberAdd", async member => {
@@ -118,7 +109,7 @@ bot.on(`guildBanRemove`, (guild, user) => {
     modlogs.send(botembed);
 });
 bot.on('guildCreate', async guild => {
-    require('./playing.js')(bot)
+    require('./status.js')(bot)
     const newserverembed = new Discord.RichEmbed()
         .setColor(`#FF000`)
         .setDescription(`Server Added`)
