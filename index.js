@@ -54,7 +54,7 @@ bot.on("guildMemberAdd", async member => {
 });
 bot.on(`messageDelete`, message => {
     if (message.author.bot) return;
-    let modlogs = message.guild.channels.find('name', 'silent-log');
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log");
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
