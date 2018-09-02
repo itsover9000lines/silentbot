@@ -15,7 +15,7 @@ bot.login(process.env.BOT_TOKEN)
 // Start Of the bot.on Messages.
 
 bot.on("ready", async () => {
-
+    require('./status.js')(bot)
     console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
 });
 
