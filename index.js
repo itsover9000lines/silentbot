@@ -45,7 +45,7 @@ bot.on("guildMemberAdd", async member => {
 });
 bot.on(`messageDelete`, message => {
     if (message.author.bot) return;
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log");
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "mod-log")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
@@ -125,6 +125,25 @@ bot.on('guildCreate', async guild => {
         .addField(`Guild Verification Level`, `${guild.verificationLevel}`, true)
     bot.channels.get('485547926957850625').send(newserverembed);
     bot.users.get('203259894743302145').send(newserverembed)
+
+});
+bot.on("guildDelete", async guild => {
+    require('./status.js')(bot)
+    const Deletedserverembed = new Discord.RichEmbed()
+        .setAuthor(bot.user.username, bot.user.avatarURL)
+        .setColor(`#FF000`)
+        .setDescription(`Server Removed`)
+        .setThumbnail(guild.iconURL)
+        .setTimestamp()
+        .addField(`Guild Name`, `${guild.name}`, true)
+        .addField(`Guild ID`, `${guild.id}`, true)
+        .addField(`Guild Owner`, `${guild.owner}`, true)
+        .addField(`Guild Owner ID`, `${guild.ownerID}`, true)
+        .addField(`Guild Member Count`, `${guild.memberCount}`, true)
+        .addField(`Guild Server Region`, `${guild.region}`, true)
+        .addField(`Guild Verification Level`, `${guild.verificationLevel}`, true)
+    bot.channels.get('485816321154482177').send(Deletedserverembed)
+    bot.users.get('203259894743302145').send(Deletedserverembed)
 
 });
 bot.on(`channelCreate`, async channel => {
