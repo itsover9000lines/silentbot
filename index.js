@@ -52,7 +52,7 @@ bot.on(`messageDelete`, message => {
         .setTimestamp()
         .setAuthor(`${message.author.tag}`, `${message.author.avatarURL}`)
         .setFooter(`${bot.user.tag}`, `${bot.user.displayAvatarURL}`)
-        .setDescription(`_ _✢Content: `**\${message.cleanContent}\**` \n ✢Channel: <#${message.channel.id}> \n ✢Message ID: ${message.id}`)
+        .setDescription(`_ _✢Content: **\`${message.cleanContent}`\** \n ✢Channel: <#${message.channel.id}> \n ✢Message ID: ${message.id}`)
     modlogs.send(botembed)
 });
 bot.on('guildCreate', async guild => {
