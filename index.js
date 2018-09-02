@@ -32,7 +32,7 @@ bot.on("guildMemberAdd", async member => {
     .setAuthor(member, member.user.avatarURL)
     .setAuthor(member.user.username, member.user.avatarURL)
     welcome.send(welcomeembed);
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam") || message.guild.channels.find(c => c.name === "bot-hell")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#1CFF00")
@@ -45,7 +45,7 @@ bot.on("guildMemberAdd", async member => {
 });
 bot.on(`messageDelete`, message => {
     if (message.author.bot) return;
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam") || message.guild.channels.find(c => c.name === "bot-hell")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
@@ -73,7 +73,7 @@ bot.on('guildCreate', async guild => {
 bot.on("guildMemberRemove", async member => {
     //member.send(`Rest in peace ${member}`)
     let guild = member.guild;
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam") || message.guild.channels.find(c => c.name === "bot-hell") || message.guild.channels.find(c => c.name === "bot-hell")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
@@ -85,7 +85,7 @@ bot.on("guildMemberRemove", async member => {
     modlogs.send(botembed);
 });
 bot.on(`guildBanAdd`, (guild, user) => {
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam") || message.guild.channels.find(c => c.name === "bot-hell") || message.guild.channels.find(c => c.name === "bot-hell")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
@@ -97,7 +97,7 @@ bot.on(`guildBanAdd`, (guild, user) => {
     modlogs.send(botembed);
 });
 bot.on(`guildBanRemove`, (guild, user) => {
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam") || message.guild.channels.find(c => c.name === "bot-hell")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#12FF00")
