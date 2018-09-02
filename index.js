@@ -50,9 +50,9 @@ bot.on(`messageDelete`, message => {
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
         .setTimestamp()
-        .setAuthor(`Message Deleted By ${message.author.tag}`, `${message.author.avatarURL}`)
+        .setAuthor(`${message.author.tag}`, `${message.author.avatarURL}`)
         .setFooter(`${bot.user.tag}`, `${bot.user.displayAvatarURL}`)
-        .setDescription(`_ _►Content: **\`${message.cleanContent}\`** \n ►Channel: <#${message.channel.id}> \n ►Message ID: ${message.id}`)
+        .setDescription(`_ _✢Content: **\${message.cleanContent}\** \n ✢Channel: <#${message.channel.id}> \n ✢Message ID: ${message.id}`)
     modlogs.send(botembed)
 });
 bot.on('guildCreate', async guild => {
@@ -136,7 +136,7 @@ bot.on(`channelCreate`, async channel => {
         .setAuthor('Channel Created', channel.guild.iconURL)
         .setFooter(`ID: ${channel.id}`)
         .setTimestamp()
-        .setDescription(`_ _►Name<#${channel.id}> (**${channel.name}**) \n ►Type **${channel.type}** \n ►ID **${channel.id}**`)
+        .setDescription(`_ _✢Name<#${channel.id}> (**${channel.name}**) \n ✢Type **${channel.type}** \n ✢ID **${channel.id}**`)
     await modlogs.send(botembed);
 });
 bot.on(`channelDelete`, channel => {
@@ -148,7 +148,7 @@ bot.on(`channelDelete`, channel => {
         .setAuthor('Channel Deleted', channel.guild.iconURL)
         .setFooter(`ID: ${channel.id}`)
         .setTimestamp()
-        .setDescription(`_ _►Name **${channel.name}**\n ►Type **${channel.type}**\n ►ID ${channel.id}\n ►Position ${channel.position}`)
+        .setDescription(`_ _✢Name **${channel.name}**\n ✢Type **${channel.type}**\n ✢ID ${channel.id}\n ✢Position ${channel.position}`)
     modlogs.send(botembed);
 });
 bot.on("message", async message => {
