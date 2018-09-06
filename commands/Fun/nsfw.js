@@ -7,7 +7,8 @@ module.exports.run = async (bot, message, args) => {
         "HighResNSFW",
         "NSFW_Wallpapers",
         "SexyWallpapers",
-        "UHDnsfw"
+        "UHDnsfw",
+        "porninfifteenseconds"
     ]
 
     var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
