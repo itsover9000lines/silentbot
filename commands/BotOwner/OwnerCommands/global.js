@@ -6,7 +6,7 @@ if (message.content.startsWith(prefix + "global")) {
     var xo02 = message.guild.channels.find('name', 'Channel name');
     if (!xo02) return message.reply(`the channel "channel name" does not exist!`)
     if (message.channel.name !== 'redtchat') return message.reply('command to be made in the "channel name "')
-                if (!xo03) return message.reply('You must write a message")
+                if (!xo03) return message.reply('You must write a message')
                     message.delete();
                     var tchat_embed = new Discord.RichEmbed()
                         .setColor("#677BC4")
