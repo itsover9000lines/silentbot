@@ -4,7 +4,10 @@ module.exports.run = async (bot, message, args) => {
     if(!message.channel.nsfw) return;
     const subreddits = [
         "nsfw_hd",
-        "HighResNSFW"
+        "HighResNSFW",
+        "NSFW_Wallpapers",
+        "SexyWallpapers",
+        "UHDnsfw"
     ]
 
     var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
