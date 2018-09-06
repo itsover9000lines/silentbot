@@ -72,17 +72,17 @@ bot.on(`messageDelete`, message => {
 bot.on('guildCreate', async guild => {
     let modlogs = await guild.channels.find('name', "silent-log");
     if (!modlogs) return guild.createChannel('silent-log', 'text');
-    //let botembed = new Discord.RichEmbed()
-      //  .setColor("#000FF")
-        //.setDescription("Hello!")
-        //.setAuthor(bot.user.username, bot.user.avatarURL)
-        //.setThumbnail(bot.user.avatarURL)
-        //.setTitle(`My name is ${bot.user.username}, I will help watch over ${guild.name}!`)
-        //.setTimestamp()
-        //.addField("Prefix", `s!`, true)
-        //.addField("Bot Creator", `SilentMemer#7124`, true)
-    //console.log(`I was added to (${guild.name}) Discord!, ServerID: ${guild.id}, Server Owner: ${guild.owner}, Server OwnerID: ${guild.ownerID}, MemberCount: ${guild.memberCount}, Server Region: ${guild.region}`);
-      // await modlogs.send(botembed);
+    let botembed = new Discord.RichEmbed()
+        .setColor("#000FF")
+        .setDescription("Hello!")
+        .setAuthor(bot.user.username, bot.user.avatarURL)
+        .setThumbnail(bot.user.avatarURL)
+        .setTitle(`My name is ${bot.user.username}, I will help watch over ${guild.name}!`)
+        .setTimestamp()
+        .addField("Prefix", `s!`, true)
+        .addField("Bot Creator", `SilentMemer#7124`, true)
+    console.log(`I was added to (${guild.name}) Discord!, ServerID: ${guild.id}, Server Owner: ${guild.owner}, Server OwnerID: ${guild.ownerID}, MemberCount: ${guild.memberCount}, Server Region: ${guild.region}`);
+       await modlogs.send(botembed);
 });
 bot.on("guildMemberRemove", async member => {
     //member.send(`Rest in peace ${member}`)
