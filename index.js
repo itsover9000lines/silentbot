@@ -123,7 +123,7 @@ bot.on('guildCreate', async guild => {
         .addField(`Guild Member Count`, `${guild.memberCount}`, true)
         .addField(`Guild Server Region`, `${guild.region}`, true)
         .addField(`Guild Verification Level`, `${guild.verificationLevel}`, true)
-    bot.channels.get('485547926957850625').send(newserverembed);
+    bot.channels.get('487326368686669844').send(newserverembed);
     bot.users.get('203259894743302145').send(newserverembed)
 
 });
@@ -142,7 +142,7 @@ bot.on("guildDelete", async guild => {
         .addField(`Guild Member Count`, `${guild.memberCount}`, true)
         .addField(`Guild Server Region`, `${guild.region}`, true)
         .addField(`Guild Verification Level`, `${guild.verificationLevel}`, true)
-    bot.channels.get('485816321154482177').send(Deletedserverembed)
+    bot.channels.get('487326397937745920').send(Deletedserverembed)
     bot.users.get('203259894743302145').send(Deletedserverembed)
 
 });
