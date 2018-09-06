@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-if (message.content.startsWith(prefix + "global")) {
+if (msg.content.startsWith(prefix + "global")) {
     let xoargs = message.content.split(" ").slice(1);
     let xo03 = xoargs.join(" ")
     var xo02 = message.guild.channels.find('name', 'silent-log');
