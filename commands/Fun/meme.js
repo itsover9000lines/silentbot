@@ -12,11 +12,11 @@ module.exports.run = async (bot, message, args) => {
     randomPuppy(sub)
         .then(url => {
             const embed = new Discord.RichEmbed()
-                .setColor(`#FF000`)
-                .setDescription(`<a:Dots:426956230582599690> Loading......`)
+                .setColor(`#20C3FF`)
+                .setDescription(`Getting ur meme`)
             message.channel.send(embed).then(message => {
-                embed.setColor(`#000FF`)
-                embed.setDescription(`Found one! [Click Here](${url})`)
+                embed.setColor(`#20C3FF`)
+                embed.setDescription(`heres ur meme lulxd [Click Here](${url})`)
                 embed.setImage(url)
                 message.edit(embed);
             })
