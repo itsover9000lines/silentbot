@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 
+module.exports.run = async (bot, message, args) => {
+
 if (msg.content.startsWith(prefix + "global")) {
     let xoargs = message.content.split(" ").slice(1);
     let xo03 = xoargs.join(" ")
@@ -19,3 +21,4 @@ if (msg.content.startsWith(prefix + "global")) {
                         .setTimestamp()
                     bot.channels.findAll('name', 'channel name').map(channel => channel.send(tchat_embed))
                 }
+}
