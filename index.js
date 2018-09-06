@@ -23,12 +23,10 @@ bot.on("guildMemberAdd", async member => {
     //member.send(`Welcome to **${member.guild.name}** ${member}`)
     let serverSize = member.guild.memberCount;
     let botCount = member.guild.members.filter(m => m.user.bot).size;
-    let humanCount = serverSize - botCount;
     let welcome = member.guild.channels.find('name', 'welcome')
     let welcomeembed = new Discord.RichEmbed()
     .setColor(`#20C3FF`)
     .setDescription(`Welcome to **${member.guild.name}** ${member}!`)
-    .addField(`You are the`, `${humanCount} member!`, true)
     .setAuthor(member, member.user.avatarURL)
     .setAuthor(member.user.username, member.user.avatarURL)
     welcome.send(welcomeembed);
