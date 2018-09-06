@@ -43,6 +43,20 @@ bot.on("guildMemberAdd", async member => {
         .setThumbnail(member.user.avatarURL)
     await modlogs.send(botembed);
 });
+
+bot.on("guildMemberAdd", async member => {
+    let modlogs = member.guild.channels.find(c => c.name === "modlogs");
+    if (!modlogs) return;
+    let botembed = new Discord.RichEmbed()
+        .setColor("#1CFF00")
+        .setAuthor('Member Joined', member.user.avatarURL)
+        .setFooter(`ID: ${member.id}`)
+        .setTimestamp()
+        .setDescription(`${member} ${member.user.tag}`)
+        .setThumbnail(member.user.avatarURL)
+    await modlogs.send(botembed);
+
+});
 bot.on(`messageDelete`, message => {
     if (message.author.bot) return;
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam") || message.guild.channels.find(c => c.name === "bot-hell")
