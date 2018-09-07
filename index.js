@@ -83,9 +83,7 @@ bot.on('guildCreate', async guild => {
        await modlogs.send(botembed);
 });
 bot.on("guildMemberRemove", async member => {
-    //member.send(`Rest in peace ${member}`)
-    let guild = member.guild;
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam") || message.guild.channels.find(c => c.name === "bot-hell") || message.guild.channels.find(c => c.name === "bot-hell")
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam") || message.guild.channels.find(c => c.name === "bot-hell")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
