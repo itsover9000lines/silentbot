@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
 
     const embed = new Discord.RichEmbed()
         .setTitle(`**INVITE LEADERBOARD**`)
-        .setColor(0xCB5A5E)
+        .setColor(#20C3FF)
         .addField('Invites', `\`\`\`${possibleinvites.join('\n')}\`\`\``)
         .setTimestamp();
     message.channel.send(embed);
