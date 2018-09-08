@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
         .setDescription(`Loading...`)
         .setTimestamp()
     message.channel.send(botembed).then(message =>{
-        botembed.setColor("#000FF")
+        botembed.setColor("#20C3FF")
         botembed.setDescription(`:ping_pong: Pong! **\`${bot.pings[0]}ms\`**`)
         botembed.setFooter(useruser, userurl)
         botembed.setTimestamp()
