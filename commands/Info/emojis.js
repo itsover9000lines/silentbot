@@ -20,7 +20,7 @@ module.exports.run = async (bot, msg, args) => {
     }
     else {
         let embed = new Discord.RichEmbed()
-        .setColor(`#FF000`)
+        .setColor(`#20C3FF`)
         .setTitle(`Current Server Emojis`)
         .setDescription(`${msg.guild.emojis.map(e => e).join(' ')}`)
         msg.channel.send(embed);
