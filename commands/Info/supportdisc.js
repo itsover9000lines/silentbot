@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
     let botembed = new Discord.RichEmbed()
-        .setColor("#7EC0EE")
+        .setColor("#20C3FF")
         .addField(`Support`, `[Support Discord](https://discord.gg/4m7fmYA)`)
         .setThumbnail(bot.user.displayAvatarURL)
         .setTimestamp()
