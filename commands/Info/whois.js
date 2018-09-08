@@ -11,7 +11,7 @@ module.exports.run = async (bot, message, args) => {
     // Define the user of a guild.
     const rmember = message.guild.member(user);
         let botembed = new Discord.RichEmbed()
-        .setColor(`RANDOM`)
+        .setColor(`#20C3FF`)
         .setThumbnail(rmember.user.avatarURL || rmember.user.defaultAvatarURL)
         .addField("Name", rmember.user, true)
         .addField(`Nickname`, rmember.nickname ? rmember.nickname : 'No Nickname', true)
