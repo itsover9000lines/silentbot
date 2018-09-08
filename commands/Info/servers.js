@@ -7,7 +7,7 @@ module.exports.run = async (bot, message, args) => {
     string += guild.name + '\n';})
     let bt = bot.user.username;
     let botembed = new Discord.RichEmbed()
-        .setColor("#000FF")
+        .setColor("#20C3FF")
         .addField("Servers In", string)
         .setTimestamp()
         .setFooter("Command Ran By: " + message.author.username, message.author.avatarURL);
