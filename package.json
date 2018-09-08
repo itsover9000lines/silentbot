@@ -12,6 +12,7 @@
         "fortnite": "^4.1.1",
         "moment": "^2.22.2",
         "moment-duration-format": "^2.2.2",
+        "moment-timezone": "^0.5.21",
         "morse-node": "^0.1.1",
         "ms": "^2.1.1",
         "nodemon": "^1.17.5",
