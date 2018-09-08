@@ -6,7 +6,7 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.send(`Please tag a user!` + "\n **s!avatar @user**");
     }
     let botembed = new Discord.RichEmbed()
-        .setColor("#000FF")
+        .setColor("#20C3FF")
         .setImage(`${aTaged.displayAvatarURL}`)
         .setAuthor(`${aTaged.username}` , `${aTaged.displayAvatarURL}`)
         .setFooter("Command Ran By: " + message.author.username, message.author.displayAvatarURL);
