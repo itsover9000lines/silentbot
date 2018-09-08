@@ -14,12 +14,12 @@ module.exports.run = async (bot, message, args) => {
 
     const embed = new Discord.RichEmbed()
         .setTitle(`**INVITE LEADERBOARD**`)
-        .setColor('#20C3FF')
+        .setColor("#20C3FF")
         .addField('Invites', `\`\`\`${possibleinvites.join('\n')}\`\`\``)
         .setTimestamp();
     message.channel.send(embed);
 }
 
 module.exports.help = {
-    name: "invitestats"
+    name: "invites"
 }
