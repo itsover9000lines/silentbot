@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
     let bt = bot.user.username;
     let botembed = new Discord.RichEmbed()
         .setDescription("[Bot Support](https://discord.gg/4m7fmYA)")
-        .setColor("#000FF")
+        .setColor("#20C3FF")
         .setThumbnail(bicon)
         .addField("Bot Name", "<@" + `${bot.user.id}` + ">", true)
         .addField("Bot Invite Link", `[Bot Invite](https://discordapp.com/oauth2/authorize?client_id=${bot.user.id}&permissions=2146958839&scope=bot)`, true)
