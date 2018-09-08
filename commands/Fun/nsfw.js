@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const randomPuppy = require('random-puppy');
 module.exports.run = async (bot, message, args) => {
     if(!message.channel.nsfw) return;
-    if(message.guild.id !== "395568008166244354") return;
+    if(message.guild.id !== "467174436299079700") return;
     const subreddits = [
         "nsfw_hd",
         "HighResNSFW",
