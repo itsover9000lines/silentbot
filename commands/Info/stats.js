@@ -5,7 +5,7 @@ require("moment-duration-format");
 module.exports.run = async (bot, message, args) => {
 const duration = moment.duration(bot.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
 const embed = new Discord.RichEmbed()
-.setColor(`#7EC0EE`)
+.setColor(`#20C3FF`)
 .setThumbnail(bot.user.avatarURL)
 .addField(`Memory Usage`, `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, true)
 .addField(`Bot Version`, `1.6.0`, true)
