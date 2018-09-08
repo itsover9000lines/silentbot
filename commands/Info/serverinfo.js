@@ -28,7 +28,7 @@ module.exports.run = async (bot, message, args) => {
     let sIcon = message.guild.iconURL;
     let serverEmbed = new Discord.RichEmbed()
         .setTitle("Server Information")
-        .setColor("#000FF")
+        .setColor("#20C3FF")
         .setAuthor("Command Ran By: " + message.author.username, message.author.avatarURL)
         .addField("Server Owner", `<@${message.guild.owner.user.id}>`, true)
         .addField("Created", `${message.guild.createdAt.toString().substr(0, 15)},\n${checkDays(message.guild.createdAt)}`, true)
