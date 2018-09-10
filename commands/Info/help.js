@@ -7,7 +7,7 @@ module.exports.run = async (bot, message, args) => {
         .setThumbnail(bot.user.displayAvatarURL)
         .setTimestamp()
         .setFooter("Command Ran By: " + message.author.username, message.author.avatarURL)
-    message.channel.send(botembed);
+    author.send(botembed);
 };
 
 
