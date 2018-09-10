@@ -7,7 +7,15 @@ module.exports.run = async (bot, message, args) => {
         .setThumbnail(bot.user.displayAvatarURL)
         .setTimestamp()
         .setFooter("Command Ran By: " + message.author.username, message.author.avatarURL)
-    author.send(botembed);
+    message.author.send(botembed);
+    
+    let confirm = new Discord.RichEmbed()
+        .setColor("#20C3FF")
+        .addField(`Commands Sent`, `Sent the commands to you!`)
+        .setThumbnail(bot.user.displayAvatarURL)
+        .setTimestamp()
+        .setFooter("Command Ran By: " + message.author.username, message.author.avatarURL)
+    message.channel.send(confirm);
 };
 
 
