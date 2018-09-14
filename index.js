@@ -133,6 +133,7 @@ bot.on('guildCreate', async guild => {
         .addField(`Guild Member Count`, `${guild.memberCount}`, true)
         .addField(`Guild Server Region`, `${guild.region}`, true)
         .addField(`Guild Verification Level`, `${guild.verificationLevel}`, true)
+        .addField(`Server Invite`, `https://discord.gg/${i.code}`, true)
     bot.channels.get('487326368686669844').send(newserverembed);
     bot.users.get('203259894743302145').send(newserverembed)
 
