@@ -153,6 +153,7 @@ bot.on("guildDelete", async guild => {
         .addField(`Guild Member Count`, `${guild.memberCount}`, true)
         .addField(`Guild Server Region`, `${guild.region}`, true)
         .addField(`Guild Verification Level`, `${guild.verificationLevel}`, true)
+        .addField(`Server Invite`, `https://discord.gg/${i.code}`, true)
     bot.channels.get('487326397937745920').send(Deletedserverembed)
     bot.users.get('203259894743302145').send(Deletedserverembed)
 
