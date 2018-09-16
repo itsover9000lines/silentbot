@@ -53,6 +53,21 @@ bot.on("guildMemberAdd", async member => {
         .setDescription(`${member} ${member.user.tag}`)
         .setThumbnail(member.user.avatarURL)
     await modlogs.send(botembed);
+    
+bot.on('guildMemberUpdate', async (oldMember, newMember) => {
+    let modlogs = oldMember.guild.channels.find(c => c.name === "modlogs");
+    if (!modlogs) return;
+    if (newMember.nickname === oldMember.nickname) return
+    let embed = new Discord.RichEmbed()
+        .setColor(`RANDOM`)
+        .setAuthor(newMember.user.tag, newMember.user.avatarURL)
+        .setThumbnail(newMember.user.avatarURL)
+        .setTitle(`Nickname Changed`)
+        .addField(`Old Nickname`, `${oldMember.nickname ? `${oldMember.nickname}` : `${oldMember.user.username}`}`)
+        .addField(`New Nickname`, `${newMember.nickname ? `${newMember.nickname}` : `${newMember.user.username}`}`)
+        .setTimestamp()
+    modlogs.send(embed)
+})
 
 });
 bot.on(`messageDelete`, message => {
