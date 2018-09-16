@@ -4,8 +4,8 @@ const fortnite = new Client(process.env.FORTNITEAPI)
 module.exports.run = async (bot, message, args) => {
     let username = args[0];
     let platform = args[1] || 'pc';
-    if (!platform) return message.channel.send(`Please Provide a Platform! [e!fortnite username xbl or pc or psn]`)
-    if (!username) return message.channel.send(`Please Provide a Username! [e!fortnite username xbl or pc or psn]`);
+    if (!platform) return message.channel.send(`Please Provide a Platform! [s!fortnite username xbl or pc or psn]`)
+    if (!username) return message.channel.send(`Please Provide a Username! [s!fortnite username xbl or pc or psn]`);
     let data = fortnite.user(username, platform).then(data => {
         let stats = data.stats;
         let lifetime = stats.lifetime;
@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
         let top12 = lifetime[4][`Top 12s`]
         let top25 = lifetime[5][`Top 25s`];
         let embed = new Discord.RichEmbed()
-            .setColor('RANDOM')
+            .setColor('#20C3FF')
             .setAuthor(data.username)
             .setDescription(`**LifeTime Stats** For [${data.username}](${data.URL})`)
             .addField(`Wins`, wins, true)
