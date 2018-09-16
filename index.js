@@ -322,5 +322,14 @@ fs.readdir("./commands/BotOwner/OwnerCommands", (err, files) => {
         bot.commands.set(props.help.names, props);
     });
 });
+
+process.on('unhandledRejection', error => {
+    console.error(`ERROR: \n${error}`);
+    let errorembed = new Discord.RichEmbed()
+    .setColor(`RED`)
+    .setTitle(`ERROR`)
+    .setDescription(error)
+    bot.channels.get('490952395660984332').send(errorembed)
+});
 // End of Getting Commands.
 //=============================================================================================================================================================================================
