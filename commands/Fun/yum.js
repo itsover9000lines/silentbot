@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
         .then(url => {
             const embed = new Discord.RichEmbed()
                 .setColor(`#20C3FF`)
-                .setDescription(`Getting ur meme`)
+                .setDescription(`FOOOOOOOOOOOOOOOOOOOOOOOOOOOOOD`)
             message.channel.send(embed).then(message => {
                 embed.setColor(`#20C3FF`)
                 embed.setDescription(`yumm [Click Here](${url})`)
