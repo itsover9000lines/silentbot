@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
 
     message.channel.send(embed).then(message => {
         embed.setColor("#000FF")
-        embed.setDescription("fooooOOOOO0000000DDDDD")
+        embed.setDescription("alexa this is so sad")
         embed.setImage(replies[result])
         embed.setFooter("Command Ran By: " + usernameid, userURL)
         message.edit(embed)
