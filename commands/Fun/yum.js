@@ -4,7 +4,7 @@ module.exports.run = async (bot, message, args) => {
     //if(!message.channel.nsfw) return;
     const subreddits = [
         "foodporn",
-        "food"
+        "todayIate"
     ]
 
     var sub = subreddits[Math.round(Math.random() * (subreddits.length - 1))];
