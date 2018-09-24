@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const Client = require('fortnite');
 const fortnite = new Client(process.env.FORTNITEAPI)
 module.exports.run = async (bot, message, args) => {
-            let username = args[0]
+        let username = args[0]
         let gamemode = args[1]
         let platform = args[2]
         if(!username) return message.channel.send(`Please provide a username. [s!fortnite <Username> <Game Mode> <Platform>]`);
