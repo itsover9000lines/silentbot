@@ -23,13 +23,16 @@ bot.on("guildMemberAdd", async member => {
     //member.send(`Welcome to **${member.guild.name}** ${member}`)
     let serverSize = member.guild.memberCount;
     let botCount = member.guild.members.filter(m => m.user.bot).size;
-    let welcome = member.guild.channels.find('name', 'welcome')
+    let welcome = message.guild.channels.find(c => c.name === "welcome") || message.guild.channels.find(c => c.name === "👋welcome👋")
     let welcomeembed = new Discord.RichEmbed()
     .setColor(`#20C3FF`)
     .setDescription(`Welcome to **${member.guild.name}** ${member}!`)
     .setAuthor(member, member.user.avatarURL)
     .setAuthor(member.user.username, member.user.avatarURL)
     welcome.send(welcomeembed);
+});
+
+bot.on("guildMemberAdd", async member => {
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
@@ -40,35 +43,39 @@ bot.on("guildMemberAdd", async member => {
         .setDescription(`${member} ${member.user.tag}`)
         .setThumbnail(member.user.avatarURL)
     await modlogs.send(botembed);
-});
 
-bot.on("guildMemberAdd", async member => {
-    let modlogs = member.guild.channels.find(c => c.name === "silent-log");
+
+bot.on("guildMemberRemove", async member => {
+    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
-        .setColor("#1CFF00")
-        .setAuthor('Member Joined', member.user.avatarURL)
+        .setColor("#FF0000")
+        .setAuthor('Member Left', member.user.avatarURL)
         .setFooter(`ID: ${member.id}`)
         .setTimestamp()
         .setDescription(`${member} ${member.user.tag}`)
         .setThumbnail(member.user.avatarURL)
-    await modlogs.send(botembed);
+    modlogs.send(botembed);
+});
     
 bot.on('guildMemberUpdate', async (oldMember, newMember) => {
     let modlogs = oldMember.guild.channels.find(c => c.name === "modlogs");
     if (!modlogs) return;
     if (newMember.nickname === oldMember.nickname) return
     let embed = new Discord.RichEmbed()
-        .setColor(`RANDOM`)
+        .setColor(`#20C3FF`)
         .setAuthor(newMember.user.tag, newMember.user.avatarURL)
         .setThumbnail(newMember.user.avatarURL)
-        .addField(`Old`, `${oldMember.nickname ? `${oldMember.nickname}` : `${oldMember.user.username}`}`)
-        .addField(`New`, `${newMember.nickname ? `${newMember.nickname}` : `${newMember.user.username}`}`)
+        .setTitle(`Name Change`)
+        .addField(`Old Nickname`, `${oldMember.nickname ? `${oldMember.nickname}` : `${oldMember.user.username}`}`)
+        .addField(`New Nickname`, `${newMember.nickname ? `${newMember.nickname}` : `${newMember.user.username}`}`)
         .setTimestamp()
     modlogs.send(embed)
 })
 
+
 });
+
 bot.on(`messageDelete`, message => {
     if (message.author.bot) return;
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
@@ -78,9 +85,10 @@ bot.on(`messageDelete`, message => {
         .setTimestamp()
         .setAuthor(`${message.author.tag}`, `${message.author.avatarURL}`)
         .setFooter(`${bot.user.tag}`, `${bot.user.displayAvatarURL}`)
-        .setDescription(`_ _✢Content: **\`${message.cleanContent}\`** \n ✢Channel: <#${message.channel.id}> \n ✢Message ID: ${message.id}`)
+        .setDescription(`_ _►Content: **\`${message.cleanContent}\`** \n ►Channel: <#${message.channel.id}> \n ►Message ID: ${message.id}`)
     modlogs.send(botembed)
 });
+
 bot.on('guildCreate', async guild => {
     let modlogs = await guild.channels.find('name', "silent-log");
     if (!modlogs) return guild.createChannel('silent-log', 'text');
@@ -96,18 +104,7 @@ bot.on('guildCreate', async guild => {
     console.log(`I was added to (${guild.name}) Discord!, ServerID: ${guild.id}, Server Owner: ${guild.owner}, Server OwnerID: ${guild.ownerID}, MemberCount: ${guild.memberCount}, Server Region: ${guild.region}`);
        await modlogs.send(botembed);
 });
-bot.on("guildMemberRemove", async member => {
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
-    if (!modlogs) return;
-    let botembed = new Discord.RichEmbed()
-        .setColor("#FF0000")
-        .setAuthor('Member Left', member.user.avatarURL)
-        .setFooter(`ID: ${member.id}`)
-        .setTimestamp()
-        .setDescription(`${member} ${member.user.tag}`)
-        .setThumbnail(member.user.avatarURL)
-    modlogs.send(botembed);
-});
+
 bot.on(`guildBanAdd`, (guild, user) => {
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
@@ -132,6 +129,7 @@ bot.on(`guildBanRemove`, (guild, user) => {
         .setThumbnail(user.avatarURL)
     modlogs.send(botembed);
 });
+
 bot.on('guildCreate', async guild => {
     require('./status.js')(bot)
     const newserverembed = new Discord.RichEmbed()
@@ -151,6 +149,7 @@ bot.on('guildCreate', async guild => {
     bot.users.get('203259894743302145').send(newserverembed)
 
 });
+
 bot.on("guildDelete", async guild => {
     require('./status.js')(bot)
     const Deletedserverembed = new Discord.RichEmbed()
@@ -170,6 +169,7 @@ bot.on("guildDelete", async guild => {
     bot.users.get('203259894743302145').send(Deletedserverembed)
 
 });
+
 bot.on(`channelCreate`, async channel => {
     let guild = channel.guild;
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
@@ -182,6 +182,7 @@ bot.on(`channelCreate`, async channel => {
         .setDescription(`_ _✢Name<#${channel.id}> (**${channel.name}**) \n ✢Type **${channel.type}** \n ✢ID **${channel.id}**`)
     await modlogs.send(botembed);
 });
+
 bot.on(`channelDelete`, channel => {
     let guild = channel.guild;
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
@@ -194,6 +195,35 @@ bot.on(`channelDelete`, channel => {
         .setDescription(`_ _✢Name **${channel.name}**\n ✢Type **${channel.type}**\n ✢ID ${channel.id}\n ✢Position ${channel.position}`)
     modlogs.send(botembed);
 });
+
+bot.on('roleCreate', role => {
+    let guild = role.guild;
+    let modlogs = guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    if (!modlogs) return;
+    let botembed = new Discord.RichEmbed()
+        .setColor("#FF000")
+        .setAuthor('Role Created', role.guild.iconURL)
+        .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
+        .setTimestamp()
+        .setDescription(`_ _►Name <@&${role.id}> (**${role.name}**)\n ►ID **${role.id}** \n ►Hex Color **${role.hexColor}** \n ►Hoisted ${role.hoist}`)
+    modlogs.send(botembed);
+
+});
+
+bot.on('roleDelete', role => {
+    let guild = role.guild;
+    let modlogs = guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    if (!modlogs) return;
+    let botembed = new Discord.RichEmbed()
+        .setColor("#FF000")
+        .setAuthor('Role Deleted', role.guild.iconURL)
+        .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
+        .setTimestamp()
+        .setDescription(`_ _►Name **${role.name}** \n ►ID **${role.id}** \n ►Position **${role.position}** \n ►Hoisted **${role.hoist}** \n ►Mentionable **${role.mentionable}** \n ►Color **${role.hexColor}** \n ►Role Created At **${new Date(role.createdTimestamp)}**`)
+    modlogs.send(botembed);
+
+});
+
 bot.on("message", async message => {
 
     if (message.author.bot) return;
