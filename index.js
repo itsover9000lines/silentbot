@@ -205,7 +205,7 @@ bot.on('roleCreate', role => {
         .setAuthor('Role Created', role.guild.iconURL)
         .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
         .setTimestamp()
-        .setDescription(`_ _►ID **${role.id}** \n ►Created At **${new Date(role.createdTimestamp)}`)
+        .setDescription(`►ID **${role.id}**`)
     modlogs.send(botembed);
 
 });
