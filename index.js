@@ -219,7 +219,7 @@ bot.on('roleDelete', role => {
         .setAuthor('Role Deleted', role.guild.iconURL)
         .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
         .setTimestamp()
-        .setDescription(`_ _ID **${role.id}**`)
+        .setDescription(`_ _►Name **${role.name}** \n ►ID **${role.id}**`)
     modlogs.send(botembed);
 
 });
