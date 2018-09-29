@@ -205,7 +205,7 @@ bot.on('roleCreate', role => {
         .setAuthor('Role Created', role.guild.iconURL)
         .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
         .setTimestamp()
-        .setDescription(`_ _►Name <@&${role.id}> (**${role.name}**)\n ►ID **${role.id}** \n ►Hex Color **${role.hexColor}** \n ►Hoisted ${role.hoist}`)
+        .setDescription(`_ _►ID **${role.id}** \n ►Created At **${new Date(role.createdTimestamp)}`)
     modlogs.send(botembed);
 
 });
@@ -219,7 +219,7 @@ bot.on('roleDelete', role => {
         .setAuthor('Role Deleted', role.guild.iconURL)
         .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
         .setTimestamp()
-        .setDescription(`_ _►Name **${role.name}** \n ►ID **${role.id}** \n ►Position **${role.position}** \n ►Hoisted **${role.hoist}** \n ►Mentionable **${role.mentionable}** \n ►Color **${role.hexColor}** \n ►Role Created At **${new Date(role.createdTimestamp)}**`)
+        .setDescription(`_ _ID **${role.id}**`)
     modlogs.send(botembed);
 
 });
