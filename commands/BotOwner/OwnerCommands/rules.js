@@ -31,6 +31,7 @@ Lease contact an Admin if you require additional information or clarification or
 • Releasing, posting, telling another person’s personal information
 • Releasing your own personal information such as email etc
 • Racist/Racial, gender, religious slurs aimed to hurt another`)
+.setFooter(`*Rules subject to change`)
 message.channel.send(embed);
 }
 module.exports.help = {
