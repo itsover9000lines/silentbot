@@ -10,6 +10,7 @@
         "discord.js": "~11.3.2",
         "array-sort": "^1.0.0",
         "fortnite": "^4.1.1",
+        "google": "^2.1.0",
         "moment": "^2.22.2",
         "moment-duration-format": "^2.2.2",
         "moment-timezone": "^0.5.21",
