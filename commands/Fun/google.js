@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const google = require("google");
 
-module.exports.run = async (client, message, args) => {
+module.exports.run = async (bot, message, args) => {
         if(!message.channel.nsfw) return;
 
   google.resultsPerPage = 1
