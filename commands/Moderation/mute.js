@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const ms = require("ms");
 
 module.exports.run = async (bot, message, args) => {
-    const modlogs = message.guild.channels.find('name', 'silent-log');
+    const modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if(!modlogs) return message.channel.send("Can't find **silent-log**");
     let tomute = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if (!tomute) return message.reply("Couldn't find user.");
