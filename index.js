@@ -353,13 +353,17 @@ fs.readdir("./commands/BotOwner/OwnerCommands", (err, files) => {
     });
 });
 
-process.on('unhandledRejection', error => {
-    console.error(`ERROR: \n${error}`);
-    let errorembed = new Discord.RichEmbed()
-    .setColor(`RED`)
-    .setTitle(`ERROR`)
-    .setDescription(error)
-    bot.channels.get('490952395660984332').send(errorembed)
-});
+//process.on('unhandledRejection', error => {
+//    console.error(`ERROR: \n${error}`);
+//    let errorembed = new Discord.RichEmbed()
+//    .setColor(`RED`)
+//    .setTitle(`ERROR`)
+//    .setDescription(error)
+//    bot.channels.get('490952395660984332').send(errorembed)
+//});
 // End of Getting Commands.
 //=============================================================================================================================================================================================
+
+process.on('unhandledRejection', error => {
+    console.error(`ERROR: \n${error}`);
+});
