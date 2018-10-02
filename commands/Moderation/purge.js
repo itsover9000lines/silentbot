@@ -2,7 +2,6 @@ const Discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
 
-      //m!purge (number of messages here), including the m!purge message
       if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("you don't have permission to use this command.");
       const noembed = new Discord.RichEmbed()
       .setColor("#FF0000")
