@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 module.exports.run = async (bot, message, args) => {
-    if(!message.member.hasPermission("MANAGE_SERVER")) return;
+    if(!message.member.hasPermission("MANAGE_SERVER")) return; message.channel.send("You don't have the `MANAGE_MESSAGES` permission.");
 let sIcon = message.guild.iconURL;
 let botembed = new Discord.RichEmbed()
     .setColor(`#FF000`)
