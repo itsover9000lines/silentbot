@@ -59,9 +59,6 @@ bot.on('guildMemberUpdate', async (oldMember, newMember) => {
         .addField(`New Nickname`, `${newMember.nickname ? `${newMember.nickname}` : `${newMember.user.username}`}`)
         .setTimestamp()
     modlogs.send(embed)
-})
-
-
 });
 
 bot.on(`messageDelete`, message => {
