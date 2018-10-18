@@ -20,20 +20,7 @@ bot.on("ready", async () => {
 });
 
 bot.on("guildMemberAdd", async member => {
-    //member.send(`Welcome to **${member.guild.name}** ${member}`)
-    let serverSize = member.guild.memberCount;
-    let botCount = member.guild.members.filter(m => m.user.bot).size;
-    let welcome = message.guild.channels.find(c => c.name === "welcome") || message.guild.channels.find(c => c.name === "👋welcome👋")
-    let welcomeembed = new Discord.RichEmbed()
-    .setColor(`#20C3FF`)
-    .setDescription(`Welcome to **${member.guild.name}** ${member}!`)
-    .setAuthor(member, member.user.avatarURL)
-    .setAuthor(member.user.username, member.user.avatarURL)
-    welcome.send(welcomeembed);
-});
-
-bot.on("guildMemberAdd", async member => {
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = member.guild.channels.find(c => c.name === "silent-log") || member.guild.channels.find(c => c.name === "bot-spam");
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#1CFF00")
@@ -44,9 +31,10 @@ bot.on("guildMemberAdd", async member => {
         .setThumbnail(member.user.avatarURL)
     await modlogs.send(botembed);
 
+});
 
 bot.on("guildMemberRemove", async member => {
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = member.guild.channels.find(c => c.name === "silent-log") || member.guild.channels.find(c => c.name === "bot-spam");
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
@@ -59,7 +47,7 @@ bot.on("guildMemberRemove", async member => {
 });
     
 bot.on('guildMemberUpdate', async (oldMember, newMember) => {
-    let modlogs = oldMember.guild.channels.find(c => c.name === "modlogs");
+    let modlogs = oldMember.guild.channels.find(c => c.name === "silent-log") || oldMember.guild.channels.find(c => c.name === "bot-spam");
     if (!modlogs) return;
     if (newMember.nickname === oldMember.nickname) return
     let embed = new Discord.RichEmbed()
