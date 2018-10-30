@@ -155,7 +155,7 @@ bot.on("guildDelete", async guild => {
 
 });
 
-bot.on(`channelCreate`, async channel => {
+bot.on("channelCreate", async channel => {
     let guild = channel.guild;
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
@@ -168,7 +168,7 @@ bot.on(`channelCreate`, async channel => {
     await modlogs.send(botembed);
 });
 
-bot.on(`channelDelete`, channel => {
+bot.on("channelDelete", channel => {
     let guild = channel.guild;
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
@@ -190,12 +190,12 @@ bot.on('roleCreate', role => {
         .setAuthor('Role Created', role.guild.iconURL)
         .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
         .setTimestamp()
-        .setDescription(`►ID **${role.id}**`)
+        .setDescription(`_ _►Name <@&${role.id}>\n ►ID **${role.id}** \n ►Hex Color **${role.hexColor}**`)
     modlogs.send(botembed);
 
 });
 
-bot.on('roleDelete', role => {
+bot.on("roleDelete", role => {
     let guild = role.guild;
     let modlogs = guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
@@ -204,7 +204,7 @@ bot.on('roleDelete', role => {
         .setAuthor('Role Deleted', role.guild.iconURL)
         .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
         .setTimestamp()
-        .setDescription(`_ _►Name **${role.name}** \n ►ID **${role.id}**`)
+        .setDescription(`_ _►Name **${role.name}** \n ►ID **${role.id}** \n ►Position **${role.position}** \n ►Color **${role.hexColor}** \n ►Role Created At **${new Date(role.createdTimestamp)}**`)
     modlogs.send(botembed);
 
 });
