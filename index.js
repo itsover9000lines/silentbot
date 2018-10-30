@@ -177,7 +177,7 @@ bot.on("channelDelete", channel => {
         .setAuthor('Channel Deleted', channel.guild.iconURL)
         .setFooter(`ID: ${channel.id}`)
         .setTimestamp()
-        .setDescription(`_ _►Name **${channel.name}**\n ►Type **${channel.type}**\n ►ID ${channel.id}\n ►Position ${channel.position}`)
+        .setDescription(`_ _►Name **${channel.name}**\n ►Type **${channel.type}**\n ►ID **${channel.id}**\n ►Position ${channel.position}`)
     modlogs.send(botembed);
 });
 
