@@ -61,7 +61,7 @@ bot.on('guildMemberUpdate', async (oldMember, newMember) => {
     modlogs.send(embed)
 });
 
-bot.on(`messageDelete`, message => {
+bot.on('messageDelete', message => {
     if (message.author.bot) return;
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
@@ -90,7 +90,7 @@ bot.on('guildCreate', async guild => {
        await modlogs.send(botembed);
 });
 
-bot.on(`guildBanAdd`, (guild, user) => {
+bot.on('guildBanAdd', (guild, user) => {
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
@@ -102,7 +102,7 @@ bot.on(`guildBanAdd`, (guild, user) => {
         .setThumbnail(user.avatarURL)
     modlogs.send(botembed);
 });
-bot.on(`guildBanRemove`, (guild, user) => {
+bot.on('guildBanRemove', (guild, user) => {
     let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
@@ -164,7 +164,7 @@ bot.on("channelCreate", async channel => {
         .setAuthor('Channel Created', channel.guild.iconURL)
         .setFooter(`ID: ${channel.id}`)
         .setTimestamp()
-        .setDescription(`_ _►Name<#${channel.id}> (**${channel.name}**) \n ►Type **${channel.type}** \n ►ID **${channel.id}**`)
+        .setDescription(`_ _►Name<#${channel.id}> \n ►Type **${channel.type}** \n ►ID **${channel.id}**`)
     await modlogs.send(botembed);
 });
 
