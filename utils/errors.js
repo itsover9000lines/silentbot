@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-let config = require("../botconfig.json");
 
 module.exports.noPerms = (message, perm) => {
     let embed = new Discord.RichEmbed()
@@ -16,7 +15,7 @@ module.exports.equalPerms = (message, user, perms) => {
 
     let embed = new Discord.RichEmbed()
         .setAuthor(message.author.username)
-        .setColor(botconfig.red)
+        .setColor("#000FF")
         .setTitle("Error")
         .addField(`${user} has perms`, perms);
 
