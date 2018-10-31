@@ -16,10 +16,20 @@ module.exports.run = async (bot, message, args) => {
         .setFooter(`${bUser.id}`)
         .setThumbnail("https://cdn.discordapp.com/attachments/464045067645091842/479298280883486723/banhammer.gif");
 
+    
+    let banEmbed2 = new Discord.RichEmbed()
+        .setDescription("You Have Benn Banned!")
+        .setColor("#ff0000")
+        .addField("Moderator", `<@${message.author.id}>`, true) 
+        .addField("Reason For Ban", bReason)
+        .setFooter(`${bUser.id}`)
+        .setThumbnail("https://cdn.discordapp.com/attachments/464045067645091842/479298280883486723/banhammer.gif");
+   
     let incidentchannel = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
     if (!incidentchannel) return message.channel.send("Can't find **silent-log** to log in.");
 
     message.guild.member(bUser).ban(bReason);
+    bUser.send(banEmbed2);
     incidentchannel.send(banEmbed);
     message.delete().catch();
 }
