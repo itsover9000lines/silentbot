@@ -28,6 +28,7 @@ bot.on("guildMemberAdd", async member => {
         .setFooter(`ID: ${member.id}`)
         .setTimestamp()
         .setDescription(`${member} ${member.user.tag}`)
+        .addField("Total Members", message.guild.memberCount, true)
         .setThumbnail(member.user.avatarURL)
     await modlogs.send(botembed);
 
@@ -42,6 +43,7 @@ bot.on("guildMemberRemove", async member => {
         .setFooter(`ID: ${member.id}`)
         .setTimestamp()
         .setDescription(`${member} ${member.user.tag}`)
+        .addField("Total Members", message.guild.memberCount, true)
         .setThumbnail(member.user.avatarURL)
     modlogs.send(botembed);
 });
