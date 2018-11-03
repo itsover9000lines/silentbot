@@ -93,7 +93,7 @@ bot.on('guildCreate', async guild => {
 });
 
 bot.on('guildBanAdd', (guild, user) => {
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = user.guild.channels.find(c => c.name === "silent-log") || user.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
@@ -105,7 +105,7 @@ bot.on('guildBanAdd', (guild, user) => {
     modlogs.send(botembed);
 });
 bot.on('guildBanRemove', (guild, user) => {
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+    let modlogs = user.guild.channels.find(c => c.name === "silent-log") || user.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#12FF00")
