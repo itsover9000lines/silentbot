@@ -104,7 +104,7 @@ bot.on('guildBanAdd', (guild, user) => {
         .setThumbnail(user.avatarURL)
     modlogs.send(botembed);
 });
-bot.on('guildBanRemove', (guild, user) => {
+bot.on('guildBanRemove', (guild, user, channels) => {
     let modlogs = user.guild.channels.find(c => c.name === "silent-log") || user.guild.channels.find(c => c.name === "bot-spam")
     if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
