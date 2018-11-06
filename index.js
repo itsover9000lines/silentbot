@@ -92,31 +92,6 @@ bot.on('guildCreate', async guild => {
        await modlogs.send(botembed);
 });
 
-bot.on('guildBanAdd', (guild, user) => {
-    let modlogs = user.guild.channels.find(c => c.name === "silent-log") || user.guild.channels.find(c => c.name === "bot-spam")
-    if (!modlogs) return;
-    let botembed = new Discord.RichEmbed()
-        .setColor("#FF0000")
-        .setAuthor('Member Banned', user.avatarURL)
-        .setFooter(`ID: ${user.id}`)
-        .setTimestamp()
-        .setDescription(`${user} ${user.tag}`)
-        .setThumbnail(user.avatarURL)
-    modlogs.send(botembed);
-});
-bot.on('guildBanRemove', (guild, user, channels) => {
-    let modlogs = user.guild.channels.find(c => c.name === "silent-log") || user.guild.channels.find(c => c.name === "bot-spam")
-    if (!modlogs) return;
-    let botembed = new Discord.RichEmbed()
-        .setColor("#12FF00")
-        .setAuthor('Member Unbanned', user.avatarURL)
-        .setFooter(`ID: ${user.id}`)
-        .setTimestamp()
-        .setDescription(`${user} ${user.tag}`)
-        .setThumbnail(user.avatarURL)
-    modlogs.send(botembed);
-});
-
 bot.on('guildCreate', async guild => {
     require('./status.js')(bot)
     const newserverembed = new Discord.RichEmbed()
