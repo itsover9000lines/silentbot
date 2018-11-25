@@ -1,3 +1,4 @@
+
 const Discord = require('discord.js');
 module.exports.run = async (bot, message, args) => {
 let logchannel = bot.channels.get('480905979341307904')
@@ -9,6 +10,7 @@ let Suseravatar = message.author.avatarURL;
 let server = message.guild;
 let Schannel = message.channel;
 let reason = args.join(' ');
+if(!reason) return message.channel.send(`What is the reason you need support?`)
     let embed = new Discord.RichEmbed()
         .setColor("#000FF")
         .setDescription(`Creating......`)
@@ -16,7 +18,7 @@ let reason = args.join(' ');
     message.delete(15000).catch()
     logchannel.send(embed).then(message => {
         Schannel.createInvite(options).then(i => {
-            embed.setColor(`RANDOM`)
+            embed.setColor(`RED`)
             embed.setDescription(`${Susername} Has Put in a Support Request!`)
             embed.addField(`User`, Susername, true)
             embed.addField(`User ID`, Susername.id, true)
