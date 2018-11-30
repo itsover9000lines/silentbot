@@ -1,7 +1,18 @@
-const Discord = require("discord.js");
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
 const superagent = require("superagent");
-
-module.exports.run = async (bot,message,args) => {
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "dog",
+            memberName: "dog",
+            aliases: [],
+            examples: [`${client.commandPrefix}dog`],
+            description: "Picture of floofer.",
+            group: "fun"
+        })
+    }
+    async run(message) {
     const userURL = message.author.avatarURL;
     const usernameid = message.author.username;
     let { body } = await superagent
@@ -17,8 +28,6 @@ module.exports.run = async (bot,message,args) => {
             embed.setFooter("Command Ran By: " + usernameid, userURL)
             message.edit(embed)
         })
-}
 
-module.exports.help = {
-    name: "dog"
+    }
 }

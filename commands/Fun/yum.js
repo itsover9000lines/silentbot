@@ -1,7 +1,18 @@
-const Discord = require('discord.js');
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
 const randomPuppy = require('random-puppy');
-module.exports.run = async (bot, message, args) => {
-    //if(!message.channel.nsfw) return;
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "yum",
+            memberName: "yum",
+            aliases: [],
+            examples: [`${client.commandPrefix}yum`],
+            description: "YUMMY FOOD",
+            group: "fun"
+        })
+    }
+    async run(message) {
     const subreddits = [
         "foodporn",
         "todayIate"
@@ -21,7 +32,5 @@ module.exports.run = async (bot, message, args) => {
                 message.edit(embed);
             })
         })
-}
-module.exports.help = {
-    name: "yum"
+    }
 }

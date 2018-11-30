@@ -1,6 +1,18 @@
-const Discord = require("discord.js");
-
-module.exports.run = async (bot, message, args) => {
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "shutdown",
+            memberName: "shutdown",
+            aliases: ["sd"],
+            examples: [`${client.commandPrefix}shutdown`],
+            description: "Shuts down the bot.",
+            group: "botowner",
+            ownerOnly: true
+        })
+    }
+    async run(message) {
     const botembed = new Discord.RichEmbed()
         .setColor("#FF000")
         .setAuthor("Command Ran By: " + message.author.username, message.author.displayAvatarURL)
@@ -15,7 +27,5 @@ module.exports.run = async (bot, message, args) => {
         await bot.unloadCommand(cmd);
     });
     process.exit(1);
-}
-module.exports.help = {
-    name: "shutdown"
+    }
 }

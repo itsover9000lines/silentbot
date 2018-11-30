@@ -1,29 +1,58 @@
-const Discord = require("discord.js");
+const { Command } = require('discord.js-commando'),
+    Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "ban",
+            memberName: "ban",
+            aliases: ["b"],
+            examples: [`${client.commandPrefix}ban @user <reason here>`],
+            description: "Bans the user mentioned.",
+            group: "moderation",
+            guildOnly: true,
+            userPermissions: ["BAN_MEMBERS"],
+            args: [
+                {
+                    key: "member",
+                    prompt: "what member do you want me to ban?",
+                    type: "member"
+                },
+                {
+                    key: 'reason',
+                    prompt: 'What is the reason for this ban?',
+                    type: 'string'
+                }
+            ]
+        })
+    }
+    async run(message, { member, reason }) {
+        if (member.user.id === message.author.id) return message.say(`You can't ban yourself...`)
+        if (member.hasPermission("MANAGE_MESSAGES")) return message.say("**ERROR**: Cannot ban that user because they are a moderator of the server.");
 
-module.exports.run = async (bot, message, args) => {
-    let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-    if (!bUser) return message.channel.send("Couldn't find that user, try again maybe?");
-    let bReason = args.join(" ").slice(22);
-    if (!message.member.hasPermission("BAN_MEMBERS")) return message.channel.send("You don't have permission to use this command.");
-    if (bUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("I cannot ban that user!");
-
-    let banEmbed = new Discord.RichEmbed()
-        .setDescription("Member Banned")
-        .setColor("#ff0000")
-        .addField("Banned User", `${bUser}`, true)
-        .addField("Moderator", `<@${message.author.id}>`, true) 
-        .addField("Reason For Ban", bReason)
-        .setFooter(`${bUser.id}`)
-        .setThumbnail("https://cdn.discordapp.com/attachments/464045067645091842/479298280883486723/banhammer.gif");
-
-    let incidentchannel = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
-    if (!incidentchannel) return message.channel.send("Can't find **silent-log** to log in.");
-
-    message.guild.member(bUser).ban(bReason);
-    incidentchannel.send(banEmbed);
-    message.delete().catch();
-}
-
-module.exports.help = {
-    name: "ban"
+        let banEmbed = new Discord.RichEmbed()
+            .setTitle(`Action`)
+            .setDescription("Member Banned")
+            .setColor("#FF0000")
+            .addField("Banned User", member, true)
+            .addField("Moderator", message.author, true)
+            .addField("Reason", reason)
+            .setFooter(`${member.id}`)
+        let dmembed = new Discord.RichEmbed()
+            .setColor(`#FF0000`)
+            .setAuthor(message.guild.name, message.guild.iconURL)
+            .setTitle(`You have been Banned.`)
+            .addField(`Server`, message.guild.name, true)
+            .addField(`Member`, member, true)
+            .addField(`Moderator`, message.author.tag, true)
+            .addField(`Reason`, reason)
+            .setTimestamp()
+            .setThumbnail(member.user.displayAvatarURL)
+            .setFooter(`Banned At`)
+        member.user.send(dmembed)
+        let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+        if (!modlogs) modlogs = message.channel;
+        await message.guild.member(member).ban(reason);
+        message.delete().catch();
+        await modlogs.send(banEmbed)
+    }
 }

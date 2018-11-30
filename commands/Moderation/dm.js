@@ -1,25 +1,33 @@
-const Discord = require("discord.js");
+const { Command } = require('discord.js-commando');
 
-module.exports.run = async (bot, message, args) => {
-    const nopermembed = new Discord.RichEmbed()
-        .setColor(`#7EC0EE`)
-        .setDescription(`<@${message.author.id}> You Don't have the Manage Messages Permission!`)
-    if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send(nopermembed);
-    let Moderatoruser = message.author.id;
-    let reason = args.slice(1).join(' ');
-    if(!reason) return message.channel.send(`You need to Provide a Reason! <@${message.author.id}>`);
-    let rUser = message.mentions.users.first();
-    let modlogs = message.guild.channels.find('name', 'silent-log');
-    if(!modlogs) return message.channel.send('Cant Find the modlogs Channel');
-    if(message.mentions.users.size < 1) return message.channel.send('You need to Mention a user for me to dm them!').catch(console.error);
-    message.channel.send(`** ✅ ${rUser.tag} Has been dmed.**`)
-    const dmembed = new Discord.RichEmbed()
-    .setColor(`#FF0000`)
-    .setDescription(`Dm from **${message.guild.name}**: **${reason}**`)
-    rUser.send(dmembed)
-    await message.delete().catch();
-}
+module.exports = class DmCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'dm',
+            group: 'moderation',
+            memberName: 'dm',
+            description: 'Sends a message to the user you mention.',
+            aliases: [],
+            examples: [`${client.commandPrefix}dm @User <message>`],
+            userPermissions: ["MANAGE_MESSAGES"],
+            args: [
+                {
+                    key: 'user',
+                    prompt: 'Which user do you want to send the DM to?',
+                    type: 'user'
+                },
+                {
+                    key: 'content',
+                    prompt: 'What would you like the content of the message to be?',
+                    type: 'string'
+                }
+            ]
+        });
+    }
 
-module.exports.help = {
-    name: "dm"
-}
+    async  run(msg, { user, content }) {
+        msg.delete().catch()
+        user.send(content);
+        await msg.say(`${msg.author} Sent the message to ${user.tag}`).then(message => message.delete(10000).catch())
+    }
+};

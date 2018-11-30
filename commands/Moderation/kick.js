@@ -1,27 +1,49 @@
-const Discord = require("discord.js");
+const { Command } = require('discord.js-commando'),
+    Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "kick",
+            memberName: "kick",
+            aliases: [],
+            examples: [`${client.commandPrefix}kick @user <reason here>`],
+            description: "Kicks the mentioned user.",
+            group: "moderation",
+            guildOnly: true,
+            userPermissions: ["KICK_MEMBERS"],
+            args: [
+                {
+                    key: "member",
+                    prompt: "What user do you want me to kick?",
+                    type: "member"
+                },
+                {
+                    key: 'content',
+                    prompt: 'What is the reason for this kick?',
+                    type: 'string'
+                }
+            ]
+        })
+    }
+    async run(message, { member, content }) {
+        let bUser = member
+        let bReason = content
+        if (bUser.id === message.guild.ownerID) return message.say(`I can't kick the server owner.`)
+        if (bUser.id === message.author.id) return message.say(`You can't kick yourself.`)
+        if (bUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("That member is a Mod/Admin for the server!");
 
-module.exports.run = async (bot, message, args) => {
-    let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
-    if (!kUser) return message.channel.send("Cound't find that user!");
-    let kReason = args.join(" ").slice(22);
-    if (!message.member.hasPermission("KICK_MEMBERS")) return message.channel.send("You do not have permission to run that command.");
-    if (kUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("I cannot ban that person!");
-    let kickembed = new Discord.RichEmbed()
-    .setColor("#ff0000")
-    .setDescription(`Member Kicked`)
-    .setFooter(kUser.id)
-    .addField(`Kicked User`, kUser, true)
-    .addField(`Moderator`, `<@${message.author.id}>`, true)
-    .addField(`Channel`, message.channel, true)
-    .setTimestamp()
-    let kickChannel = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
-    if (!kickChannel) return message.channel.send("Can't find **silent-log** channel to log in.");
-
-    message.guild.member(kUser).kick(kReason);
-    kickChannel.send(kickembed);
-    message.delete().catch();
-}
-
-module.exports.help = {
-    name: "kick"
+        let banEmbed = new Discord.RichEmbed()
+            .setTitle(`Action`)
+            .setDescription("Member Kicked")
+            .setColor("#FF0000")
+            .addField("Kicked User", `${bUser}`, true)
+            .addField("Moderator", `<@${message.author.id}>`, true)
+            .addField("Reason", bReason)
+            .setFooter(`${bUser.id}`)
+        let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
+        if (!modlogs) modlogs = message.channel;
+        message.guild.member(bUser).kick(bReason);
+        message.delete().catch();
+        await modlogs.send(banEmbed)
+    }
 }

@@ -1,18 +1,24 @@
+var { Command } = require('discord.js-commando');
+const moment = require("moment");
+require("moment-duration-format");
 const Discord = require('discord.js');
-const ms = require('ms');
-module.exports.run = async (bot, message, args) => {
-    let totalSeconds = (bot.uptime / 1000);
-    let hours = Math.round(totalSeconds / 3600);
-    totalSeconds %= 3600;
-    let minutes = Math.round(totalSeconds / 60);
-    let seconds = Math.round(totalSeconds % 60);
-    let uptime = (`${hours} Hours\n${minutes} Minutes\n${seconds} Seconds`);
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "uptime",
+            memberName: "uptime",
+            aliases: ["ut"],
+            examples: [`${client.commandPrefix}uptime`],
+            description: "Time bot has been online.",
+            group: "info"
+        })
+    }
+    async run(message) {
+        const duration = moment.duration(this.client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
         const embed = new Discord.RichEmbed()
-        .setColor(`#20C3FF`)
-        .addField(`Uptime`, uptime, true)
-        .setFooter(`Command Ran By: ${message.author.username}`, message.author.avatarURL)
-    message.channel.send(embed);
-}
-module.exports.help = { 
-    name: "uptime"
+            .setColor(`#20C3FF`)
+            .addField(`Uptime`, `${duration}`, true)
+            .setFooter(this.client.user.username, this.client.user.displayAvatarURL)
+        message.channel.send(embed);
+    }
 }

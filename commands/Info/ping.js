@@ -1,21 +1,29 @@
-const Discord = require("discord.js");
+const { Command } = require('discord.js-commando');
+const Discord = require('discord.js');
+module.exports = class PingCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'ping',
+            group: 'info',
+            memberName: 'ping',
+            description: 'Ping for the bot.',
+            examples: ['ping'],
+            aliases: ["pong", "pung", "p"],
+            guildOnly: false
+        });
+    }
 
-module.exports.run = async (bot, message, args) => {
-    const useruser = "Command Ran By: " + message.author.username;
-    const userurl = message.author.avatarURL;
-    let botembed = new Discord.RichEmbed()
-        .setColor("#000FF")
-        .setDescription(`Loading...`)
-        .setTimestamp()
-    message.channel.send(botembed).then(message =>{
-        botembed.setColor("#20C3FF")
-        botembed.setDescription(`:ping_pong: Pong! **\`${bot.pings[0]}ms\`**`)
-        botembed.setFooter(useruser, userurl)
-        botembed.setTimestamp()
-        message.edit(botembed)
-    })
-
-}
-module.exports.help = {
-    name: "ping"
-}
+    async run(msg, client) {
+        let loadingembed = new Discord.RichEmbed()
+            .setColor("#000FF")
+            .setDescription(`Loading...`)
+            .setTimestamp()
+        const message = await msg.channel.send(loadingembed);
+        let embed = new Discord.RichEmbed()
+            .setColor("#000FF")
+            .addField(`Message Latency`, `${message.createdTimestamp - msg.createdTimestamp}ms`, true)
+            .addField(`Bot Latency`, `${Math.round(this.client.ping)}ms`, true)
+            .setFooter(this.client.user.username, this.client.user.avatarURL)
+        message.edit(embed);
+    }
+};

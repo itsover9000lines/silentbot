@@ -1,6 +1,17 @@
-const Discord = require('discord.js');
-
-module.exports.run = async (bot, message, args) => {
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "food",
+            memberName: "food",
+            aliases: [],
+            examples: [`${client.commandPrefix}food`],
+            description: "I. WANT. FOOOOOOD!!!",
+            group: "fun"
+        })
+    }
+    async run(message) {
     const userURL = message.author.avatarURL;
     const usernameid = message.author.username;
     let replies = [
@@ -10,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
     let result = Math.floor((Math.random() * replies.length));
     let embed = new Discord.RichEmbed()
         .setColor("#FF000")
-        .setDescription("<a:Dots:426956230582599690> Loading a PJ Photo, Please Wait.,,,,")
+        .setDescription("<a:Dots:426956230582599690> Loading...")
 
     message.channel.send(embed).then(message => {
         embed.setColor("#000FF")
@@ -19,7 +30,5 @@ module.exports.run = async (bot, message, args) => {
         embed.setFooter("Command Ran By: " + usernameid, userURL)
         message.edit(embed)
     })
-}
-module.exports.help = {
-    name: "food"
+    }
 }

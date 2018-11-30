@@ -1,12 +1,29 @@
-const Discord = require("discord.js");
-
-module.exports.run = async (bot, message, args) => {
-
-
-    let rUser = message.guild.member(message.mentions.members.first() || message.guild.members.get(args[0]));
-    if (!rUser) return message.channel.send("Couldn't find that user!");
-    let reason = args.join(" ").slice(22);
-
+const { Command } = require('discord.js-commando'),
+    Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "report",
+            memberName: "report",
+            aliases: [],
+            examples: [`${client.commandPrefix}report`],
+            description: "Reports a user.",
+            group: "moderation",
+            args: [
+                {
+                    key: 'rUser',
+                    prompt: 'What user are you reporting?',
+                    type: 'member'
+                },
+                {
+                    key: 'reason',
+                    prompt: 'What is the reason for this report?',
+                    type: 'string'
+                }
+            ]
+        })
+    }
+    async run(message, {rUser, reason}) {
     let sIcon = message.guild.iconURL;
 
 
@@ -38,15 +55,5 @@ module.exports.run = async (bot, message, args) => {
 
     reportschannel.send(reportEmbed);
     message.author.send(dmEmbed);
-
-
-    if (!message.content.startsWith(prefix)) return;
-
-
-
-}
-
-
-module.exports.help = {
-    name: "report"
+    }
 }

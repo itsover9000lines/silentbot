@@ -1,6 +1,17 @@
-const Discord = require("discord.js");
-
-module.exports.run = async (bot, message, args) => {
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "coinflip",
+            memberName: "coinflip",
+            aliases: ["cf"],
+            examples: [`${client.commandPrefix}coinflip`],
+            description: "Flips a coin.",
+            group: "fun"
+        })
+    }
+    async run(message) {
   const rolled = Math.floor(Math.random() * 2) + 1;
   let headembed = new Discord.RichEmbed()
   .setAuthor(`Coin Flip`)
@@ -20,8 +31,5 @@ module.exports.run = async (bot, message, args) => {
   {
     message.channel.send(headembed);
   }
-}
-
-module.exports.help = {
-  name: "coinflip"
+    }
 }

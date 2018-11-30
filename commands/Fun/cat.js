@@ -1,6 +1,17 @@
-const Discord = require('discord.js');
-
-module.exports.run = async (bot, message, args) => {
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "cat",
+            memberName: "cat",
+            aliases: [],
+            examples: [`${client.commandPrefix}cat`],
+            description: "Gets a picture of a cat for you. (Translation for cats: Meow.)",
+            group: "fun"
+        })
+    }
+    async run(message) {
     const userURL = message.author.avatarURL;
     const usernameid = message.author.username;
     let replies = [
@@ -29,7 +40,5 @@ module.exports.run = async (bot, message, args) => {
         embed.setFooter("Command Ran By: " + usernameid, userURL)
         message.edit(embed)
     })
-}
-module.exports.help = {
-    name: "cat"
+    }
 }

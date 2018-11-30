@@ -1,6 +1,18 @@
-const Discord = require("discord.js");
-
-module.exports.run = async (bot, message, args) => {
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "servers",
+            memberName: "servers",
+            aliases: [],
+            examples: [`${client.commandPrefix}servers`],
+            description: "Shows a full list of all servers the bot is in.",
+            group: "info"
+        })
+    }
+    async run(message) {
+    let bot = this.client;
     let bicon = bot.user.displayAvatarURL;
     let string = '';
     bot.guilds.forEach(guild => {
@@ -12,8 +24,5 @@ module.exports.run = async (bot, message, args) => {
         .setTimestamp()
         .setFooter("Command Ran By: " + message.author.username, message.author.avatarURL);
     message.channel.send(botembed);
-}
-
-module.exports.help = {
-    name: "servers"
+    }
 }

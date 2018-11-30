@@ -1,10 +1,16 @@
 //=============================================================================================================================================================================================
 // Start of the bot requirements etc.
 
-const botconfig = require("./botconfig.json");
-const Discord = require("discord.js");
+const { CommandoClient } = require('discord.js-commando');
+const Discord = require('discord.js');
+const path = require('path');
 const fs = require("fs");
-const bot = new Discord.Client({disableEveryone: true});
+const bot = new CommandoClient({
+    commandPrefix: "sd!",
+    unknownCommandResponse: false,
+    owner: ["203259894743302145", "505187354546536468"],
+    autoReconnect: true
+});
 bot.commands = new Discord.Collection();
 let cooldown = new Set();
 let cdseconds = 2;
@@ -13,6 +19,31 @@ bot.login(process.env.BOT_TOKEN)
 // End of the Bot Requirements etc.
 //=============================================================================================================================================================================================
 // Start Of the bot.on Messages.
+
+bot.on("reconnectiong", () => {
+    let embed = new Discord.RichEmbed()
+        .setColor(`#F2FF02`)
+        .setAuthor(bot.user.tag, bot.user.displayAvatarURL)
+        .setDescription(`Reconnected`)
+    bot.channels.get("510884979262226432").send(embed)
+});
+
+bot.on("disconnect", () => {
+    let embed = new Discord.RichEmbed()
+        .setColor(`#FF0000`)
+        .setAuthor(bot.user.tag, bot.user.displayAvatarURL)
+        .setDescription(`Disconnected`)
+    bot.channels.get("510884979262226432").send(embed)
+});
+
+bot.on('ready', () => {
+    let embed = new Discord.RichEmbed()
+        .setColor(`#FF000`)
+        .setAuthor(bot.user.tag, bot.user.displayAvatarURL)
+        .setTitle(`Connected`)
+    bot.channels.get("510884979262226432").send(embed)
+
+});
 
 bot.on("ready", async () => {
     require('./status.js')(bot)
@@ -186,145 +217,22 @@ bot.on("roleDelete", role => {
 
 });
 
-bot.on("message", async message => {
-
-    if (message.author.bot) return;
-    const dmembeds = new Discord.RichEmbed()
-    .setColor(`#FF000`)
-    .setAuthor(message.author.tag, message.author.avatarURL)
-    .setDescription(message.content)
-    .setThumbnail(message.author.avatarURL)
-    .setTimestamp()
-    .setFooter(`DM Recieved At`, bot.user.avatarURL)
-    const dmreplies = new Discord.WebhookClient(`${process.env.DMWEBHOOKID}`, `${process.env.DMWEBHOOKTOKEN}`);
-    if (message.channel.type === "dm") return dmreplies.send(dmembeds);
-   const prefixes = ['s!', 'S!'];
-    let prefix = false;
-    for (const thisPrefix of prefixes) {
-        if (message.content.startsWith(thisPrefix)) prefix = thisPrefix;
-    }
-    if (!prefix) return;
-    if (!message.content.startsWith(prefix)) return;
-    if (cooldown.has(message.author.id)) {
-        message.delete();
-        return message.reply("You have to wait 5 seconds between commands.")
-    }
-    if (!message.member.hasPermission("ADMINISTRATOR")) {
-        cooldown.add(message.author.id);
-    }
-
-
-    let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let args = messageArray.slice(1);
-
-    let commandfile = bot.commands.get(cmd.slice(prefix.length));
-    if (commandfile) commandfile.run(bot, message, args);
-
-    setTimeout(() => {
-        cooldown.delete(message.author.id)
-    }, cdseconds * 1000)
-
-});
+bot.registry
+    .registerDefaultTypes()
+    .registerGroups([
+        ["botowner", "Owner Commands"],
+        ["info", "Information Commands"],
+        ["moderation", "Moderation Commands"],
+        ["fun", "Fun Commands"]
+    ])
+    .registerDefaultGroups()
+    .registerDefaultCommands({
+        ping: false,
+    })
+    .registerCommandsIn(path.join(__dirname, 'commands'));
 
 // End of the bot.on Message.
 //==============================================================================================================================================================================================
-// Start of Getting and Loading the Commands
-
-fs.readdir("./commands/Fun", (err, files) => {
-
-    if (err) console.log(err);
-    let jsfile = files.filter(f => f.split(".").pop() === "js");
-    if (jsfile.length <= 0) {
-        console.log("Couldn't find Fun commands.");
-        return;
-    }
-
-    jsfile.forEach((f, i) => {
-        let props = require(`./commands/Fun/${f}`);
-        console.log(`${f} loaded!`);
-        bot.commands.set(props.help.name, props);
-        bot.commands.set(props.help.names, props);
-    });
-});
-
-fs.readdir("./commands/Info/", (err, files) => {
-
-    if (err) console.log(err);
-    let jsfile = files.filter(f => f.split(".").pop() === "js");
-    if (jsfile.length <= 0) {
-        console.log("Couldn't Info find commands.");
-        return;
-    }
-
-    jsfile.forEach((f, i) => {
-        let props = require(`./commands/Info/${f}`);
-        console.log(`${f} loaded!`);
-        bot.commands.set(props.help.name, props);
-        bot.commands.set(props.help.names, props);
-    });
-});
-
-fs.readdir("./commands/Moderation/", (err, files) => {
-
-    if (err) console.log(err);
-    let jsfile = files.filter(f => f.split(".").pop() === "js");
-    if (jsfile.length <= 0) {
-        console.log("Couldn't find Moderation commands.");
-        return;
-    }
-
-    jsfile.forEach((f, i) => {
-        let props = require(`./commands/Moderation/${f}`);
-        console.log(`${f} loaded!`);
-        bot.commands.set(props.help.name, props);
-        bot.commands.set(props.help.names, props);
-    });
-});
-
-fs.readdir("./commands/BotOwner", (err, files) => {
-
-    if (err) console.log(err);
-    let jsfile = files.filter(f => f.split(".").pop() === "js");
-    if (jsfile.length <= 0) {
-        console.log("Couldn't find Bot Owner commands.");
-        return;
-    }
-
-    jsfile.forEach((f, i) => {
-        let props = require(`./commands/BotOwner/${f}`);
-        console.log(`${f} loaded!`);
-        bot.commands.set(props.help.name, props);
-        bot.commands.set(props.help.names, props);
-    });
-});
-fs.readdir("./commands/BotOwner/OwnerCommands", (err, files) => {
-
-    if (err) console.log(err);
-    let jsfile = files.filter(f => f.split(".").pop() === "js");
-    if (jsfile.length <= 0) {
-        console.log("Couldn't find BotOwner/OwnerCommands commands.");
-        return;
-    }
-
-    jsfile.forEach((f, i) => {
-        let props = require(`./commands/BotOwner/OwnerCommands/${f}`);
-        console.log(`${f} loaded!`);
-        bot.commands.set(props.help.name, props);
-        bot.commands.set(props.help.names, props);
-    });
-});
-
-//process.on('unhandledRejection', error => {
-//    console.error(`ERROR: \n${error}`);
-//    let errorembed = new Discord.RichEmbed()
-//    .setColor(`RED`)
-//    .setTitle(`ERROR`)
-//    .setDescription(error)
-//    bot.channels.get('490952395660984332').send(errorembed)
-//});
-// End of Getting Commands.
-//=============================================================================================================================================================================================
 
 process.on('unhandledRejection', error => {
     console.error(`ERROR: \n${error}`);

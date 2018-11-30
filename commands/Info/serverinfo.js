@@ -1,11 +1,23 @@
-const Discord = require("discord.js");
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
 function checkDays(date) {
     let now = new Date();
     let diff = now.getTime() - date.getTime();
     let days = Math.floor(diff / 86400000);
     return days + (days == 1 ? " day" : " days") + " ago";
 };
-module.exports.run = async (bot, message, args) => {
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "serverinfo",
+            memberName: "serverinfo",
+            aliases: [],
+            examples: [`${client.commandPrefix}serverinfo`],
+            description: "Shows information on the server.",
+            group: "info"
+        })
+    }
+    async run(message) {
     let verifLevels = ["None", "Low", "Medium", "(╯°□°）╯︵  ┻━┻", "┻━┻ミヽ(ಠ益ಠ)ノ彡┻━┻"];
     let region = {
         "brazil": "Brazil",
@@ -38,7 +50,7 @@ module.exports.run = async (bot, message, args) => {
         .addField("Verification Level", verifLevels[message.guild.verificationLevel], true)
         .setTimestamp()
         .addField("Total Members", message.guild.memberCount, true)
-        .addField('Member Status', `**${message.guild.members.filter(o => o.presence.status === 'online').size}** :online:\n**${message.guild.members.filter(i => i.presence.status === 'idle').size}** Idle/Away\n**${message.guild.members.filter(dnd => dnd.presence.status === 'dnd').size}** Do Not Disturb\n**${message.guild.members.filter(off => off.presence.status === 'offline').size}** Offline/Invisible\n**${message.guild.members.filter(s => s.presence.status === 'streaming').size}** Streaming`)
+        .addField('Member Status', `**${message.guild.members.filter(o => o.presence.status === 'online').size}** Online\n**${message.guild.members.filter(i => i.presence.status === 'idle').size}** Idle/Away\n**${message.guild.members.filter(dnd => dnd.presence.status === 'dnd').size}** Do Not Disturb\n**${message.guild.members.filter(off => off.presence.status === 'offline').size}** Offline/Invisible\n**${message.guild.members.filter(s => s.presence.status === 'streaming').size}** Streaming`)
         .addField("Total Channels", message.guild.channels.size, true)
         .addField("Total Roles", message.guild.roles.size, true)
         .addField("Total Bots", botCount, true)
@@ -49,8 +61,5 @@ module.exports.run = async (bot, message, args) => {
     message.channel.startTyping();
     message.channel.send(serverEmbed);
     await message.channel.stopTyping();
-}
-
-module.exports.help = {
-    name: "serverinfo"
+    }
 }

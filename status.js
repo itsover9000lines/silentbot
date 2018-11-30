@@ -7,7 +7,7 @@ module.exports = (bot) => {
 		`s!help | Users: ${userssize}`,
 		`s!help | Servers: ${guildsize}`,
     		`s!help | Channels: ${channelsize}`,
-		`Website | https://silentbot.tk/`
+		`https://silentbot.tk/`
 	];
 	setInterval(() => {
 		let gameval = Math.floor((Math.random() * status.length));

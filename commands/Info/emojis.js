@@ -1,6 +1,20 @@
+const { Command } = require('discord.js-commando');
 const Discord = require('discord.js');
-module.exports.run = async (bot, msg, args) => {
-    if (msg.guild.emojis.size === 0) {
+module.exports = class AvatarCommand extends Command {
+    constructor(client) {
+        super(client,
+            {
+                name: "emojis",
+                memberName: "emojis",
+                group: "info",
+                description: "Shows servers emojis",
+                examples: [`${client.commandPrefix}emojis`],
+                guildOnly: true,
+                aliases: ["emotes"]
+            });
+    }
+    async run(msg) {
+if (msg.guild.emojis.size === 0) {
         return msg.channel.send('There are no emojis on this server.');
     }
     else if (msg.guild.emojis.map(e => e).join(' ').length > 2048) {
@@ -26,6 +40,4 @@ module.exports.run = async (bot, msg, args) => {
         msg.channel.send(embed);
     }
 }
-module.exports.help = {
-    name: "emojis"
 }

@@ -1,37 +1,72 @@
-const Discord = require("discord.js");
-const moment = require('moment-timezone');
-module.exports.run = async (bot, message, args) => {
- try{   let user;
-    // If the user mentions someone, display their stats. If they just run userinfo without mentions, it will show their own stats.
-    if (message.mentions.users.first()) {
-        user = message.mentions.users.first();
-    } else {
-        user = message.author;
+const { Command } = require('discord.js-commando');
+const Discord = require('discord.js');
+const moment = require('moment-timezone')
+const perms = require('../../utils/perms.json');
+module.exports = class WhoisCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: 'whois',
+            memberName: 'whois',
+            group: 'info',
+            aliases: [],
+            description: 'Shows info about the mentioned user.',
+            examples: [`${client.commandPrefix}whois @user`],
+            guildOnly: true,
+            throttling: {
+                usages: 2,
+                duration: 3
+            },
+            args: [
+                {
+                    key: 'member',
+                    prompt: 'What member do you want the info about?',
+                    type: 'member'
+                }
+            ]
+        })
     }
-    // Define the user of a guild.
-    const rmember = message.guild.member(user);
-        let botembed = new Discord.RichEmbed()
-        .setColor(`#20C3FF`)
-        .setThumbnail(rmember.user.avatarURL || rmember.user.defaultAvatarURL)
-        .addField("Name", rmember.user, true)
-        .addField(`Nickname`, rmember.nickname ? rmember.nickname : 'No Nickname', true)
-        .addField(`Bot`, rmember.user.bot ? 'Yes' : 'No', true)
-        .addField(`Tag`, rmember.user.tag, true)
-        .addField("User ID", rmember.id, true)
-        .addField(`Nitro/Partner`, `${rmember.user.avatar.startsWith('a_') ? 'Has Nitro or Partner' : 'Regular User'}`, true)
-        .addField(`Avatar Url`, `[Click Here](${rmember.user.avatarURL || rmember.user.defaultAvatarURL })`, true)
-        .addField(`Account Creation:`, `${moment(rmember.user.createdAt).format('dddd, MMMM Do YYYY, h:mm:ss a zz')}`)
-        .addField(`Joined Server At:`, `${moment(rmember.joinedAt).format('dddd, MMMM Do YYYY, h:mm:ss a zz') }`)
-        .addField("Status", rmember.presence.status.toUpperCase(), true)
-        .addField(`Game`, rmember.presence.game ? rmember.presence.game.name: 'N/A', true)
-        .addField(`Roles [${rmember.roles.size}]`, `${rmember.roles.sort((b, a) => { return a.position - b.position}).map(role => `${role}`).join(" | ")}`)
-        .setTimestamp()
-    message.channel.send(botembed)
-}catch (e) {
-    message.channel.send(`ERROR\nIf you have a default avatar this error will show, working on fixing this error.`)
+
+    async run(msg, { member }) {
+        const arrayClean = function (deleteValue, array) {
+            for (let val in array) {
+                if (array[val] === deleteValue) {
+                    array.splice(val, 1);
+                    val -= 1;
+                }
+            }
+
+            return array;
+        };
+        const allowed = Object.entries(member.permissions.serialize()).filter(([perm, allowed]) => allowed).map(([perm]) => "`" + perms[perm] + "`").join(',   ');
+
+        let embed = new Discord.RichEmbed()
+            .setColor(`#20C3FF`)
+            .setThumbnail(member.user.displayAvatarURL)
+            .setTimestamp()
+            .addField(`Mention`, member.user, true)
+            .addField(`Tag`, member.user.tag, true)
+            .addField(`Name`, member.user.username, true)
+            .addField(`Nickname`, member.nickname ? member.nickname : 'No Nickname', true)
+            .addField(`User ID`, member.id, true)
+            .addField(`Discriminator`, `#${member.user.discriminator}`, true)
+            .addField(`Bot`, member.user.bot ? 'Yes' : 'No', true)
+            .addField("Status", member.presence.status.toUpperCase(), true)
+            .addField(`Game`, member.presence.game ? member.presence.game.name : 'N/A', true)
+            .addField(`Avatar URL`, `[Click Here](${member.user.displayAvatarURL})`)
+            .addBlankField()
+            .addField(`Account Created At`, `${moment(member.user.createdAt).format('dddd, MMMM Do YYYY')}\n${moment(member.user.createdAt).format('h:mm:ss a zz')}`, true)
+            .addField(`Joined Server At`, `${moment(member.joinedAt).format('dddd, MMMM Do YYYY')}\n${moment(member.joinedAt).format('h:mm:ss a zz')}`, true)
+            .addBlankField()
+            .addField('Highest Role', member.roles.size > 1 ? member.highestRole : 'N/A', true)
+            .addField('Highest Role Hoisted', member.highestRole.hoist ? "Yes" : "No", true)
+            .addField(`**Permissions**`, allowed ? `•\u2000${allowed}` : '•\u2000\None')
+            .addField(`Role(s)`, member.roles.size > 1 ? arrayClean(null, member.roles.map((r) => {
+                if (r.name !== '@everyone') {
+                    return r;
+                }
+
+                return null;
+            })).join(' | ') : 'None', false)
+        msg.say(embed)
+    }
 }
-}
-module.exports.help = {
-    name: "whois",
-    names: "userinfo"
-};

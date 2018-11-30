@@ -1,25 +1,45 @@
-const Discord = require("discord.js");
 
-module.exports.run = async (bot, message, args) => {
-    if (!message.member.hasPermission("MANAGE_ROLES")) return message.reply("Sorry pal, you can't do that.");
-    let rMember = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
-    if (!rMember) return message.reply("Couldn't find that user, yo.");
-    let role = args.slice(1).join(" ");
-    if (!role) return message.reply("Specify a role!");
-    let gRole = message.guild.roles.find(`name`, role);
-    if (!gRole) return message.reply("Couldn't find that role.");
+const { Command } = require('discord.js-commando'),
+    Discord = require('discord.js');
 
-    if (!rMember.roles.has(gRole.id)) return message.reply("They don't have that role.");
-    await (rMember.removeRole(gRole.id));
-
-    try {
-        await rMember.send(`RIP, you lost the ${gRole.name} role.`)
-    } catch (e) {
-        message.channel.send(`<@${rMember.id}> Was successfully removed from the ${gRole.name} role!`)
+module.exports = class AddRoleCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "removerole",
+            memberName: "removerole",
+            aliases: ["rr"],            
+            examples: [`${client.commandPrefix}removerole @user <Role Name>`],
+            description: "Removes a role from a user",
+            group: "moderation",
+            args: [
+                {
+                    key: 'member',
+                    prompt: 'What member is the role being removed from?',
+                    type: 'member'
+                },
+                {
+                    key: "role",
+                    prompt: "What role is being removed?",
+                    type: "role"
+                }
+            ]
+        })
     }
-    message.delete().catch();
-}
 
-module.exports.help = {
-    name: "removerole"
-}
+    async run(message, { member, role }) {
+        let modlogs = message.guild.channels.find(c => c.name === "silent-logs");
+        if (!modlogs) modlogs = message.channel;
+        if (!member.roles.has(role.id)) return message.say("They don't have that role.");
+        await (member.removeRole(role.id));
+        let embed = new Discord.RichEmbed()
+            .setColor('#000FF')
+            .setTitle(`Role Removed`)
+            .setAuthor(member.user.tag, member.user.displayAvatarURL)
+            .addField(`Role`, role, true)
+            .addField(`Member`, member, true)
+            .addField(`Moderator`, message.author, true)
+            .setThumbnail(member.user.displayAvatarURL)
+            .setTimestamp()
+        modlogs.send(embed)
+    }
+};

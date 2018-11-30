@@ -1,10 +1,26 @@
-const Discord = require("discord.js");
- module.exports.run = async (bot, message, args) => {
+const { Command } = require('discord.js-commando'),
+    Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "say",
+            memberName: "say",
+            aliases: [],
+            examples: [`${client.commandPrefix}say`],
+            description: "Make the bot say anything you want!",
+            group: "moderation",
+            args: [
+                {
+                    key: 'botmessage',
+                    prompt: 'What would you like the bot to say?',
+                    type: 'string'
+                }
+            ]
+        })
+    }
+    async run(message, {botmessage}) {
     if (!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("Sorry but you don't have the permissions to use this command.");
-    let botmessage = args.join(" ");
     message.channel.send(botmessage);
     message.delete().catch();
-}
- module.exports.help = {
-    name: "say"
+    }
 }
