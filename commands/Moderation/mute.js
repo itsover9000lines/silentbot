@@ -32,18 +32,18 @@ module.exports = class NCommand extends Command {
         })
     }
     async run(message, { member, time, content }) {
-        const modlogs = message.guild.channels.find(c => c.name === "modlogs")
+        const modlogs = message.guild.channels.find(c => c.name === "silent-log")
         let moderatorname = `<@${message.author.id}>`
         if (!modlogs) return message.channel.send("Can't find **modlogs**");
         let tomute = member
-        if (tomute.hasPermission("MANAGE_MESSAGES")) return message.reply("Sorry but i can't mute Mods/Admins!");
+        if (tomute.hasPermission("MANAGE_MESSAGES")) return message.reply("Sorry cannot mute this user.");
         let muterole = message.guild.roles.find(r => r.name === "Muted") || message.guild.roles.find(r => r.name === "muted")
         let reason = content
         if (!muterole) {
             try {
                 muterole = await message.guild.createRole({
                     name: `Muted`,
-                    color: "#FF0000",
+                    color: "#000000",
                     permissions: []
                 })
                 message.guild.channels.forEach(async (channel, id) => {
@@ -86,14 +86,6 @@ module.exports = class NCommand extends Command {
             modlogs.send(unmuteembed);
         }, ms(mutetime));
         message.delete().catch();
-
-        const dmembed = new Discord.RichEmbed()
-            .setColor(`#FF0000`)
-            .setDescription(`You have been Muted in **${message.guild.name}**`)
-            .addField(`Time`, `${ms(ms(mutetime))}`)
-            .addField(`Reason`, `${reason}`)
-        tomute.send(`<@${tomute.id}>`)
-        await tomute.send(dmembed)
 
     }
 }
