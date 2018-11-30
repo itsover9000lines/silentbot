@@ -6,7 +6,7 @@ const Discord = require('discord.js');
 const path = require('path');
 const fs = require("fs");
 const bot = new CommandoClient({
-    commandPrefix: "sd!",
+    commandPrefix: "s!",
     unknownCommandResponse: false,
     owner: ["203259894743302145", "505187354546536468"],
     autoReconnect: true
