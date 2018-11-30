@@ -1,5 +1,17 @@
-const Discord = require('discord.js');
-module.exports.run = async (bot,message,args) => {
+const {Command} = require('discord.js-commando'),
+ Discord = require('discord.js');
+module.exports = class NCommand extends Command {
+    constructor(client) {
+        super(client, {
+            name: "invite",
+            memberName: "invite",
+            aliases: ["inv"],
+            examples: [`${client.commandPrefix}invite`],
+            description: "Creates an invite for the Discord.",
+            group: "info"
+        })
+    }
+    async run(message) {
     var options = {
         maxAge: 0
     };
@@ -19,7 +31,5 @@ module.exports.run = async (bot,message,args) => {
         message.edit(botembed)
         })
     })
-}
-module.exports.help = {
-    name: "invite"
+    }
 }
