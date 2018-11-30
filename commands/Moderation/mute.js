@@ -6,7 +6,7 @@ module.exports = class NCommand extends Command {
         super(client, {
             name: "mute",
             memberName: "mute",
-            aliases: ["silence", "calm"],
+            aliases: [],
             examples: [`${client.commandPrefix}mute @user/userid <Time Here> <reason here>`],
             description: "Mutes mentioned member.",
             guildOnly: true,
