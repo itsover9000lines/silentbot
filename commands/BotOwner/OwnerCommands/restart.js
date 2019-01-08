@@ -12,7 +12,6 @@ module.exports = class RestartCommand extends Command {
         })
     }
     async run(message) {
-        let bot = this.client
-        await message.say(`Restarting.`).then(bot.destroy().then(bot.login(process.env.BOT_TOKEN)))
+        await message.say(`Restarting.`).then(this.client.destroy().then(this.client.login(process.env.BOT_TOKEN)))
     }
 }
