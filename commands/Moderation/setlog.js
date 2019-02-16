@@ -10,6 +10,7 @@ module.exports = class NCommand extends Command {
             examples: [`${client.commandPrefix}setchannel #channel`],
             description: "Sets the logging channel for the server.",
             group: "moderation",
+            userPermissions: ["MANAGE_GUILD"],
             guildOnly: true,
             args: [
               {
