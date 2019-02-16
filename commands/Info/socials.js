@@ -20,7 +20,7 @@ module.exports = class NCommand extends Command {
             .addField(`Subscribe to the creator on YouTube!`, `[Subscribe](http://bit.ly/aljsdkla)`)
             .addField(`Follow him on Twitch!`, `[Follow](http://bit.ly/2QysMqZ)`)
             .addField(`Follow his Twitter!`, `[Follow](http://bit.ly/2xxLWoY)`)
-            .addField(`Support his patreon here!`, `[Donate](http://bit.ly/2o7Tvxr)`)
+            .addField(`Support his patreon here!`, `[Donate](http://bit.ly/2SFRXMY)`)
             .setFooter("Command Ran By: " + message.author.username, message.author.avatarURL)
 
 

@@ -3,6 +3,8 @@
 
 const { CommandoClient } = require('discord.js-commando');
 const Discord = require('discord.js');
+const settings = require("./utils/models/settings.js");
+const mongoose = require('mongoose');
 const path = require('path');
 const fs = require("fs");
 const bot = new CommandoClient({
@@ -11,10 +13,22 @@ const bot = new CommandoClient({
     owner: ["203259894743302145", "505187354546536468"],
     autoReconnect: true
 });
+const logger = async function(client, guild, embed){
+    settings.findOne({serverID: guild.id}, async (err, db) => {
+if(db){
+if(db.log === "") return;
+let log = guild.channels.get(db.log);
+if(!log) return;
+log.send(embed)
+}
+})
+}
+bot.log = logger;
 bot.commands = new Discord.Collection();
 let cooldown = new Set();
 let cdseconds = 2;
 bot.login(process.env.BOT_TOKEN)
+mongoose.connect(`mongodb://Bot:${process.env.MONGO}@SilentBot-shard-00-00-bty7a.mongodb.net:27017/account?ssl=true&replicaSet=SilentBot-shard-0&authSource=admin&retryWrites=true`, {useNewUrlParser: true});
 
 // End of the Bot Requirements etc.
 //=============================================================================================================================================================================================
@@ -45,14 +59,23 @@ bot.on('ready', () => {
 
 });
 
-bot.on("ready", async () => {
+bot.on("ready", async guild => {
     require('./status.js')(bot)
     console.log(`${bot.user.username} is online on ${bot.guilds.size} servers!`);
+    bot.guilds.forEach(guild => {
+        settings.findOne({serverID: guild.id}, async (err, db) => {
+       if(!db){
+       new settings({
+       serverID: guild.id,
+       serverName: guild.name,
+       log: ""
+       }).save().catch(err => console.log(err.stack))
+       }
+       }) 
+       })
 });
 
 bot.on("guildMemberAdd", async member => {
-    let modlogs = member.guild.channels.find(c => c.name === "silent-log") || member.guild.channels.find(c => c.name === "bot-spam");
-    if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#1CFF00")
         .setAuthor('Member Joined', member.user.avatarURL)
@@ -61,13 +84,11 @@ bot.on("guildMemberAdd", async member => {
         .setDescription(`${member} ${member.user.tag}`)
         .addField("Total Members", member.guild.memberCount, true)
         .setThumbnail(member.user.avatarURL)
-    await modlogs.send(botembed);
+    bot.log(bot, message.guild, botembed);
 
 });
 
 bot.on("guildMemberRemove", async member => {
-    let modlogs = member.guild.channels.find(c => c.name === "silent-log") || member.guild.channels.find(c => c.name === "bot-spam");
-    if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
         .setAuthor('Member Left', member.user.avatarURL)
@@ -76,12 +97,10 @@ bot.on("guildMemberRemove", async member => {
         .setDescription(`${member} ${member.user.tag}`)
         .addField("Total Members", member.guild.memberCount, true)
         .setThumbnail(member.user.avatarURL)
-    modlogs.send(botembed);
+    bot.log(bot, message.guild, botembed);
 });
     
 bot.on('guildMemberUpdate', async (oldMember, newMember) => {
-    let modlogs = oldMember.guild.channels.find(c => c.name === "silent-log") || oldMember.guild.channels.find(c => c.name === "bot-spam");
-    if (!modlogs) return;
     if (newMember.nickname === oldMember.nickname) return
     let embed = new Discord.RichEmbed()
         .setColor(`#20C3FF`)
@@ -91,25 +110,31 @@ bot.on('guildMemberUpdate', async (oldMember, newMember) => {
         .addField(`Old Nickname`, `${oldMember.nickname ? `${oldMember.nickname}` : `${oldMember.user.username}`}`)
         .addField(`New Nickname`, `${newMember.nickname ? `${newMember.nickname}` : `${newMember.user.username}`}`)
         .setTimestamp()
-    modlogs.send(embed)
+    bot.log(bot, message.guild, botembed);
 });
 
 bot.on('messageDelete', message => {
     if (message.author.bot) return;
-    let modlogs = message.guild.channels.find(c => c.name === "silent-log") || message.guild.channels.find(c => c.name === "bot-spam")
-    if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
         .setTimestamp()
         .setAuthor(`${message.author.tag}`, `${message.author.avatarURL}`)
         .setFooter(`${bot.user.tag}`, `${bot.user.displayAvatarURL}`)
         .setDescription(`_ _►Content: **\`${message.cleanContent}\`** \n ►Channel: <#${message.channel.id}> \n ►Message ID: ${message.id}`)
-    modlogs.send(botembed)
+    bot.log(bot, message.guild, botembed);
 });
 
 bot.on('guildCreate', async guild => {
-    let modlogs = await guild.channels.find('name', "silent-log");
-    if (!modlogs) return guild.createChannel('silent-log', 'text');
+    if(guild.available !== true) return;
+    settings.findOne({serverID: guild.id}, async (err, db) => {
+    if(!db){
+    new settings({
+    serverID: guild.id,
+    serverName: guild.name,
+    log: ""
+}).save().catch(err => console.log(err.stack))
+}
+}) 
     let botembed = new Discord.RichEmbed()
         .setColor("#000FF")
         .setDescription("Hello!")
@@ -118,9 +143,10 @@ bot.on('guildCreate', async guild => {
         .setTitle(`My name is ${bot.user.username}, I will help watch over ${guild.name}!`)
         .setTimestamp()
         .addField("Prefix", `s!`, true)
-        .addField("Bot Creator", `SilentMemer#7124`, true)
+        .addField("To use the logging feature, do **s!setchannel #channel-name** to get started!")
+        .addField("Bot Creator", `Silenty#6969`, true)
     console.log(`I was added to (${guild.name}) Discord!, ServerID: ${guild.id}, Server Owner: ${guild.owner}, Server OwnerID: ${guild.ownerID}, MemberCount: ${guild.memberCount}, Server Region: ${guild.region}`);
-       await modlogs.send(botembed);
+       message.channel.send(botembed);
 });
 
 bot.on('guildCreate', async guild => {
@@ -165,55 +191,47 @@ bot.on("guildDelete", async guild => {
 
 bot.on("channelCreate", async channel => {
     let guild = channel.guild;
-    let modlogs = channel.guild.channels.find(c => c.name === "silent-log") || channel.guild.channels.find(c => c.name === "bot-spam")
-    if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF000")
         .setAuthor('Channel Created', channel.guild.iconURL)
         .setFooter(`ID: ${channel.id}`)
         .setTimestamp()
         .setDescription(`_ _►Name<#${channel.id}> \n ►Type **${channel.type}** \n ►ID **${channel.id}**`)
-    await modlogs.send(botembed);
+    bot.log(bot, message.guild, botembed);
 });
 
 bot.on("channelDelete", channel => {
     let guild = channel.guild;
-    let modlogs = channel.guild.channels.find(c => c.name === "silent-log") || channel.guild.channels.find(c => c.name === "bot-spam")
-    if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF0000")
         .setAuthor('Channel Deleted', channel.guild.iconURL)
         .setFooter(`ID: ${channel.id}`)
         .setTimestamp()
         .setDescription(`_ _►Name **${channel.name}**\n ►Type **${channel.type}**\n ►ID **${channel.id}**\n ►Position ${channel.position}`)
-    modlogs.send(botembed);
+    bot.log(bot, message.guild, botembed);
 });
 
 bot.on('roleCreate', role => {
     let guild = role.guild;
-    let modlogs = guild.channels.find(c => c.name === "silent-log") || guild.channels.find(c => c.name === "bot-spam")
-    if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF000")
         .setAuthor('Role Created', role.guild.iconURL)
         .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
         .setTimestamp()
         .setDescription(`_ _►Name <@&${role.id}>\n ►ID **${role.id}** \n ►Hex Color **${role.hexColor}**`)
-    modlogs.send(botembed);
+    bot.log(bot, message.guild, botembed);
 
 });
 
 bot.on("roleDelete", role => {
     let guild = role.guild;
-    let modlogs = guild.channels.find(c => c.name === "silent-log") || guild.channels.find(c => c.name === "bot-spam")
-    if (!modlogs) return;
     let botembed = new Discord.RichEmbed()
         .setColor("#FF000")
         .setAuthor('Role Deleted', role.guild.iconURL)
         .setFooter(`${bot.user.tag}`, `${bot.user.avatarURL}`)
         .setTimestamp()
         .setDescription(`_ _►Name **${role.name}** \n ►ID **${role.id}** \n ►Position **${role.position}** \n ►Color **${role.hexColor}**`)
-    modlogs.send(botembed);
+    bot.log(bot, message.guild, botembed);
 
 });
 
