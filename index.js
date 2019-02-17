@@ -7,6 +7,7 @@ const settings = require("./utils/models/settings.js");
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require("fs");
+const Money = require("./utils/models/money.js")
 const bot = new CommandoClient({
     commandPrefix: "s!",
     unknownCommandResponse: false,
@@ -235,6 +236,29 @@ bot.on("roleDelete", role => {
 
 });
 
+bot.on("message", async message => {
+    let coinsToAdd = Math.ceil(Math.random() * 10);
+    Money.findOne({
+        userID: message.author.id,
+        serverID: message.guild.id
+    }, (err, money) => {
+        if(err) console.log(err);
+        if(!money){
+            const newMoney = new Money({
+                userID: message.author.id,
+                serverID: message.guild.id,
+                money: coinsToAdd
+            })
+
+            newMoney.save().catch(err => console.log(err));
+        }else {
+            money.money = money.money + coinsToAdd;
+            money.save().catch(err => console.log(err));
+
+        }
+    })
+})
+
 bot.registry
     .registerDefaultTypes()
     .registerGroups([
@@ -246,6 +270,7 @@ bot.registry
     .registerDefaultGroups()
     .registerDefaultCommands({
         ping: false,
+        prefix: false,
     })
     .registerCommandsIn(path.join(__dirname, 'commands'));
 

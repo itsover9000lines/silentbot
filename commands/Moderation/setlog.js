@@ -30,7 +30,7 @@ module.exports = class NCommand extends Command {
   db.log = channel.id;
   db.save().catch(err => console.log(err.stack));
   let e = new Discord.RichEmbed()
-  .setColor("#20C3FF")
+  .setColor(message.member.displayColor)
   .setTitle(`Success`)
   .setDescription(`**Old:** <#${old}>\n**New:** ${channel}`)
   return message.channel.send(e)
