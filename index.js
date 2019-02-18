@@ -270,7 +270,6 @@ bot.registry
     .registerDefaultGroups()
     .registerDefaultCommands({
         ping: false,
-        prefix: false,
     })
     .registerCommandsIn(path.join(__dirname, 'commands'));
 
