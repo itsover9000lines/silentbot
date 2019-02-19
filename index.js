@@ -237,6 +237,7 @@ bot.on("roleDelete", role => {
 });
 
 bot.on("message", async message => {
+    if (message.author.bot) return;
     let coinsToAdd = Math.ceil(Math.random() * 10);
     Money.findOne({
         userID: message.author.id,
