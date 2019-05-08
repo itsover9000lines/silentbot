@@ -8,7 +8,7 @@ module.exports = class NCommand extends Command {
             aliases: [],
             examples: [`${client.commandPrefix}announce`],
             description: "Sends a message to each guild owner.",
-            group: "owner",
+            group: "botowner",
             ownerOnly: true,
             args: [
                 {
